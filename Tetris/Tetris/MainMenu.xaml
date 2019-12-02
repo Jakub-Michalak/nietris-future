@@ -23,6 +23,6 @@
 
         <Button Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Margin="40,338,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand"/>
 
-        <TextBlock Grid.Column="1" Margin="0,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="72" Text="nieTris Future" HorizontalAlignment="Stretch" />
+        <TextBlock Grid.Column="1" Margin="80,44,80,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="72" Text="nieTris Future" HorizontalAlignment="Stretch" />
     </Grid>
 </Page>
