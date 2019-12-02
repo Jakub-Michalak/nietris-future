@@ -126,6 +126,9 @@
     <Compile Include="GameLoop.xaml.cs">
       <DependentUpon>GameLoop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StatsPage.xaml.cs">
+      <DependentUpon>StatsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tetromino\IPiece.cs" />
     <Compile Include="Tetromino\JPiece.cs" />
     <Compile Include="Tetromino\LPiece.cs" />
@@ -226,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

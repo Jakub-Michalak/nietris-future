@@ -47,7 +47,11 @@ namespace Tetris
             this.Frame.Navigate(typeof(SettingsPage));
         }
 
-        
+        private void NavigateToStatsPage(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(StatsPage));
+        }
+
 
         private void Exit(object sender, RoutedEventArgs e)
         {

@@ -14,8 +14,8 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Margin="40,138,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand"/>
-        
-        <Button Grid.Column="0" x:Name="SETTINGS" Content="SETTINGS" HorizontalAlignment="Stretch" Margin="40,239,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand">
+
+        <Button Grid.Column="0" x:Name="STATS" Content="STATS" HorizontalAlignment="Stretch" Margin="40,239,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand">
            
         </Button>
 
