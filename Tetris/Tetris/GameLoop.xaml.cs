@@ -143,7 +143,7 @@ namespace Tetris
             }
             using (var canvasActiveLayer = args.DrawingSession.CreateLayer(1.0f))
             {
-                //tutaj spadające klocki
+                
             }
             using (var canvasActiveLayer = args.DrawingSession.CreateLayer(1.0f))
             {
