@@ -30,7 +30,7 @@ namespace Tetris
 
         private void NavigateToGame(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(GameLoop));
+            this.Frame.Navigate(typeof(GamePage));
         }
 
         private void SetRotationControls(object sender, RoutedEventArgs e)
