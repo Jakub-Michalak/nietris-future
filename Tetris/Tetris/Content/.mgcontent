@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>WindowsStoreApp</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Dark/BCG.jpg</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Dark/Overlay.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/BCG.jpg</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/I.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/J.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/L.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/O.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/Overlay.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/S.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/T.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default/Z.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/BCG.jpg</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/I.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/J.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/L.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/O.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/Overlay.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/S.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/T.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Default1/Z.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/BCG.jpg</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/I.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/J.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/L.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/O.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/Overlay.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/S.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/T.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Eggplant/Z.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/BCG.jpg</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/I.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/J.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/L.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/O.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/Overlay.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/S.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/T.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Neon/Z.png</File>
+    <File>C:/Users/ShioC/Source/Repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Themes/Test/BCG.jpg</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>
