@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.IO;
+using Windows.Foundation;
 
 namespace Tetris
 {
@@ -27,6 +28,49 @@ namespace Tetris
 
         string theme = PlayPage.P1.GetTheme();
 
+        char[,] board = new char[40, 10] {
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 's', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
+        { 'n', 'n', 's', 's', 'n', 'n', 'n', 'n', 'n', 'i' },
+        { 'l', 'o', 'o', 's', 'j', 'j', 'j', 'n', 'n', 'i' },
+        { 'l', 'o', 'o', 't', 'z', 'z', 'j', 'n', 'n', 'i' },
+        { 'l', 'l', 't', 't', 't', 'z', 'z', 'n', 'n', 'i' },
+        }; //TEST
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -44,7 +88,8 @@ namespace Tetris
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.Window.AllowUserResizing = false;
+
+            Board board = new Board();
             base.Initialize();
         }
 
@@ -114,6 +159,8 @@ namespace Tetris
                 //TODO: Wróć do MainPage/PlayPage
             }
 
+            
+
 
             // TODO: Add your update logic here
 
@@ -130,6 +177,26 @@ namespace Tetris
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
             spriteBatch.Draw(BackgroundTex, GraphicsDevice.Viewport.Bounds, Color.White);
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+
+                    Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
+
+
+                    if (board[i + 20, j] == 'i') spriteBatch.Draw(IBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 'o') spriteBatch.Draw(OBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 't') spriteBatch.Draw(TBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 's') spriteBatch.Draw(SBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 'z') spriteBatch.Draw(ZBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 'j') spriteBatch.Draw(JBlockTex, kloc , Color.White);
+                    if (board[i + 20, j] == 'l') spriteBatch.Draw(LBlockTex, kloc , Color.White);
+
+
+
+                }
+            }
             spriteBatch.Draw(OverlayTex, new Rectangle(GraphicsDevice.Viewport.Width/4,0, GraphicsDevice.Viewport.Width /2, GraphicsDevice.Viewport.Height),Color.White);
             spriteBatch.End();
             // TODO: Add your drawing code here
