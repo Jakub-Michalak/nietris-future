@@ -8,13 +8,14 @@ using Windows.Foundation;
 
 namespace Tetris
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class Game1 : Game
 {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        RenderTarget2D themeRenderer;
+        RenderTarget2D boardRenderer;
+
         Texture2D IBlockTex;
         Texture2D JBlockTex;
         Texture2D LBlockTex;
@@ -24,6 +25,9 @@ namespace Tetris
         Texture2D ZBlockTex;
         Texture2D BackgroundTex;
         Texture2D OverlayTex;
+
+        public float timepassed;
+
 
 
         string theme = PlayPage.P1.GetTheme();
@@ -70,6 +74,7 @@ namespace Tetris
         { 'l', 'o', 'o', 't', 'z', 'z', 'j', 'n', 'n', 'i' },
         { 'l', 'l', 't', 't', 't', 'z', 'z', 'n', 'n', 'i' },
         }; //TEST
+        char[,] temp = new char[40, 10];
 
         public Game1()
         {
@@ -79,30 +84,24 @@ namespace Tetris
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0f);
 
-            Board board = new Board();
+            IsFixedTimeStep = true;
+
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+       
+
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here <- nie działało
+            themeRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+            boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
+
             FileStream fileStream;
             fileStream = new FileStream($@"Content/Themes/{theme}/I.png", FileMode.Open, FileAccess.Read);
             IBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
@@ -123,16 +122,11 @@ namespace Tetris
             fileStream = new FileStream($@"Content/Themes/{theme}/Overlay.png", FileMode.Open, FileAccess.Read);
             OverlayTex = Texture2D.FromStream(GraphicsDevice, fileStream);
             fileStream.Dispose();
-
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
             IBlockTex.Dispose();
             JBlockTex.Dispose();
             LBlockTex.Dispose();
@@ -144,14 +138,13 @@ namespace Tetris
             OverlayTex.Dispose();
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
+            timepassed = gameTime.ElapsedGameTime.Milliseconds;
+            
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 UnloadContent();
@@ -159,7 +152,18 @@ namespace Tetris
                 //TODO: Wróć do MainPage/PlayPage
             }
 
-            
+            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed  || Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+
+            }
+
+            if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+
+            }
+
+
+
 
 
             // TODO: Add your update logic here
@@ -167,39 +171,55 @@ namespace Tetris
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
+
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Magenta);
 
+            GraphicsDevice.SetRenderTarget(boardRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-            spriteBatch.Draw(BackgroundTex, GraphicsDevice.Viewport.Bounds, Color.White);
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 10; j++)
                 {
-
                     Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
 
-
-                    if (board[i + 20, j] == 'i') spriteBatch.Draw(IBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 'o') spriteBatch.Draw(OBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 't') spriteBatch.Draw(TBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 's') spriteBatch.Draw(SBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 'z') spriteBatch.Draw(ZBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 'j') spriteBatch.Draw(JBlockTex, kloc , Color.White);
-                    if (board[i + 20, j] == 'l') spriteBatch.Draw(LBlockTex, kloc , Color.White);
-
-
-
+                    if (board[i + 20, j] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (board[i + 20, j] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
                 }
             }
-            spriteBatch.Draw(OverlayTex, new Rectangle(GraphicsDevice.Viewport.Width/4,0, GraphicsDevice.Viewport.Width /2, GraphicsDevice.Viewport.Height),Color.White);
             spriteBatch.End();
-            // TODO: Add your drawing code here
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            GraphicsDevice.SetRenderTarget(themeRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+            
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+            spriteBatch.Draw(BackgroundTex, new Rectangle(0, 0, 1920, 1080), Color.White);
+            spriteBatch.Draw(boardRenderer, new Rectangle(740, 100, 440, 880), Color.White);
+            spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(themeRenderer, GraphicsDevice.Viewport.Bounds, Color.White);
+
+            spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
