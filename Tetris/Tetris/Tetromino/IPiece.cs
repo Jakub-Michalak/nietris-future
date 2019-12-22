@@ -8,10 +8,7 @@ namespace Tetris
 {
     class IPiece : Tetromino
     {
-        public override string PieceSymbol()
-        {
-            return "I";
-        }
+        new public char PieceSymbol = 'i';
 
         public override int[,] rotation1()
         {

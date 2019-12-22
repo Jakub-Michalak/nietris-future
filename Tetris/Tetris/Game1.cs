@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Windows.Foundation;
 
@@ -28,51 +29,66 @@ namespace Tetris
 
         public float timepassed;
 
+        List<Tetromino> nextTetromino = BagRandomizer.GetNewBag();
+        Tetromino currentTetromino;
+
+        private KeyboardState currentKeyboardState;
+        private KeyboardState lastKeyboardState;
+
+        int level = 1;
+        float gravity;
+
+        bool isBlockPlaced = false;
+
+
+
+
+
 
 
         string theme = PlayPage.P1.GetTheme();
 
-        char[,] board = new char[40, 10] {
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 's', 'n', 'n', 'n', 'n', 'n', 'n', 'n' },
-        { 'n', 'n', 's', 's', 'n', 'n', 'n', 'n', 'n', 'i' },
-        { 'l', 'o', 'o', 's', 'j', 'j', 'j', 'n', 'n', 'i' },
-        { 'l', 'o', 'o', 't', 'z', 'z', 'j', 'n', 'n', 'i' },
-        { 'l', 'l', 't', 't', 't', 'z', 'z', 'n', 'n', 'i' },
+        char?[,] board = new char?[40, 10] {
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, null, null, null, null, null, null, null, null },
+        { null, null, 's', null, null, null, null, null, null, null },
+        { null, null, 's', 's', null, null, null, null, null, 'i' },
+        { 'l', 'o', 'o', 's', 'j', 'j', 'j', null, null, 'i' },
+        { 'l', 'o', 'o', 't', 'z', 'z', 'j', null, null, 'i' },
+        { 'l', 'l', 't', 't', 't', 'z', 'z', null, null, 'i' },
         }; //TEST
         char[,] temp = new char[40, 10];
 
@@ -89,6 +105,9 @@ namespace Tetris
             TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0f);
 
             IsFixedTimeStep = true;
+            currentTetromino = nextTetromino[0];
+            nextTetromino.RemoveAt(0);
+
 
             base.Initialize();
         }
@@ -142,7 +161,7 @@ namespace Tetris
         protected override void Update(GameTime gameTime)
         {
             timepassed = gameTime.ElapsedGameTime.Milliseconds;
-            
+            currentKeyboardState = Keyboard.GetState();
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -152,9 +171,35 @@ namespace Tetris
                 //TODO: Wróć do MainPage/PlayPage
             }
 
+            if (nextTetromino.Count < 7) nextTetromino.AddRange(BagRandomizer.GetNewBag());
+
+            if (isBlockPlaced)
+            {
+                currentTetromino = nextTetromino[0];
+                nextTetromino.RemoveAt(0);
+                UWPConsole.Console.WriteLine($"current: {currentTetromino.PieceSymbol}");
+                UWPConsole.Console.WriteLine($"next: {nextTetromino[0].PieceSymbol}");
+                UWPConsole.Console.WriteLine($"queued: {nextTetromino.Count}");
+                isBlockPlaced = false;
+            }
+
+            
+
+
+
+
+            if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
+            {
+                //HARD DROP
+                isBlockPlaced = true;
+            }
+
+
+
             if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed  || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-
+                currentTetromino.move("left");
+                
             }
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Right))
@@ -164,10 +209,9 @@ namespace Tetris
 
 
 
-
+            lastKeyboardState = currentKeyboardState;
 
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -185,6 +229,7 @@ namespace Tetris
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
+                    
 
                     if (board[i + 20, j] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
                     if (board[i + 20, j] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);

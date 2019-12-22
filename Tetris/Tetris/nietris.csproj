@@ -240,6 +240,9 @@
     <PackageReference Include="MonoGame.Framework.WindowsUniversal">
       <Version>3.7.1.189</Version>
     </PackageReference>
+    <PackageReference Include="UWPConsole">
+      <Version>1.0.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
