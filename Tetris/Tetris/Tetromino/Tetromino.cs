@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,10 @@ namespace Tetris
     {
         public int x = 5;
         public int y = 10;
-        public char? PieceSymbol = null; 
+        public virtual List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(1, 1), new Vector2(1, 2), new Vector2(2, 2), new Vector2(2, 1) }; }
+
+
+        public virtual char? PieceSymbol() { return null; }
         public virtual int[,] rotation1()
         {
             return null;

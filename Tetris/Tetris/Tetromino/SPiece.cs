@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace Tetris
 {
     class SPiece : Tetromino
     {
-        new public char PieceSymbol = 's';
+        public override char? PieceSymbol() { return 's'; }
+        public override List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(3, -1), new Vector2(4, -1), new Vector2(4, -2), new Vector2(5, -2) }; }
         public override int[,] rotation1()
         {
             return new int[3, 3]{

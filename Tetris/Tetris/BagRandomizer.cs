@@ -41,7 +41,7 @@ namespace Tetris
             List<Tetromino> TestList = GetNewBag();
             for (int i = 0; i < 7; i++)
             {
-                Debug.WriteLine(TestList.ElementAt(i).PieceSymbol);
+                Debug.WriteLine(TestList.ElementAt(i).PieceSymbol());
             }
         }
 
