@@ -214,6 +214,37 @@ namespace Tetris
                 Move(Directions.Down);
             }
 
+            if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
+            {
+                foreach(Vector2 v in CurrentBlockPositions)
+                {
+                    board[20 + (int)v.Y, (int)v.X] = currentTetromino.PieceSymbol();
+                }
+                isBlockPlaced = true;
+            }
+
+            for (int i = 0; i < 40; i++)
+            {
+                if(board[i,0]!=null && board[i, 1] != null && board[i, 2] != null && board[i, 3] != null && board[i, 4] != null && board[i, 5] != null && board[i, 6] != null && board[i, 7] != null && board[i, 8] != null && board[i, 9] != null)
+                {
+                    for (int j = 0; j < 10; j++) 
+                    {
+                        board[i, j] = null;
+                    }
+
+
+                    
+
+                    for(int k = i; k > 0 ;k-- )
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            board[k, j] = board[k - 1, j];
+                        }
+                    }
+                }
+            }
+
 
 
 
