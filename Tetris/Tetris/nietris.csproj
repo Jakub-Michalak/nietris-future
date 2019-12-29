@@ -171,6 +171,7 @@
     <Content Include="Content\Themes\Default1\T.png" />
     <Content Include="Content\Themes\Default1\Z.png" />
     <Content Include="Content\Themes\Default\BCG.jpg" />
+    <Content Include="Content\Themes\Default\Grid.png" />
     <Content Include="Content\Themes\Default\I.png" />
     <Content Include="Content\Themes\Default\J.png" />
     <Content Include="Content\Themes\Default\L.png" />
@@ -180,6 +181,7 @@
     <Content Include="Content\Themes\Default\T.png" />
     <Content Include="Content\Themes\Default\Z.png" />
     <Content Include="Content\Themes\Eggplant\BCG.jpg" />
+    <Content Include="Content\Themes\Eggplant\Grid.png" />
     <Content Include="Content\Themes\Eggplant\I.png" />
     <Content Include="Content\Themes\Eggplant\J.png" />
     <Content Include="Content\Themes\Eggplant\L.png" />
@@ -189,6 +191,7 @@
     <Content Include="Content\Themes\Eggplant\T.png" />
     <Content Include="Content\Themes\Eggplant\Z.png" />
     <Content Include="Content\Themes\Neon\BCG.jpg" />
+    <Content Include="Content\Themes\Neon\Grid.png" />
     <Content Include="Content\Themes\Neon\I.png" />
     <Content Include="Content\Themes\Neon\J.png" />
     <Content Include="Content\Themes\Neon\L.png" />
