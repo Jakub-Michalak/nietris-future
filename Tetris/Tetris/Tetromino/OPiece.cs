@@ -17,35 +17,5 @@ namespace Tetris
             return current;
         }
 
-
-        public override int[,] rotation1()
-        {
-            return new int[3, 4]{
-            { 0,1,1,0 },
-            { 0,1,1,0 },
-            { 0,0,0,0 } };
-        }
-        public override int[,] rotation2()
-        {
-            return new int[3, 4]{
-            { 0,1,1,0 },
-            { 0,1,1,0 },
-            { 0,0,0,0 } };
-        }
-        public override int[,] rotation3()
-        {
-            return new int[3, 4]{
-            { 0,1,1,0 },
-            { 0,1,1,0 },
-            { 0,0,0,0 } };
-        }
-        public override int[,] rotation4()
-        {
-            return new int[3, 4]{
-            { 0,1,1,0 },
-            { 0,1,1,0 },
-            { 0,0,0,0 } };
-        }
-
     }
 }
