@@ -13,6 +13,27 @@ namespace Tetris
         public int y = 10;
         public virtual List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(1, 1), new Vector2(1, 2), new Vector2(2, 2), new Vector2(2, 1) }; }
 
+        public enum rotationDirection
+        {
+            clockwise,
+            counterclockwise
+        }
+
+        public enum rotations
+        {
+            rotation1,
+            rotation2,
+            rotation3,
+            rotation4
+        }
+
+        public virtual List<Vector2> Rotate(List<Vector2> current, rotations currentRotation, rotationDirection direction)
+        {
+            return current;
+
+        }
+
+       
 
         public virtual char? PieceSymbol() { return null; }
         public virtual int[,] rotation1()
@@ -31,23 +52,7 @@ namespace Tetris
         {
             return null;
         }
-        public void move(string direction)
-        {
-            switch (direction) 
-            {
-                case "left":
-                    x = x - 1;
-                    break;
-                case "right":
-                    x = x + 1;
-                    break;
-                case "down":
-                    y = y - 1;
-                    break;
-            }
-               
 
-        }
 
 
     

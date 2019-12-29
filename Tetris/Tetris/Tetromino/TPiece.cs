@@ -11,6 +11,10 @@ namespace Tetris
     {
         public override char? PieceSymbol() { return 't'; }
         public override List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(3, -1), new Vector2(4, -1), new Vector2(5, -1), new Vector2(4, -2) }; }
+
+
+
+
         public override int[,] rotation1()
         {
             return new int[3, 3]{

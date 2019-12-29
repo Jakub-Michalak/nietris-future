@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Windows.Foundation;
 
 namespace Tetris
@@ -35,6 +36,8 @@ namespace Tetris
 
         List<Tetromino> nextTetromino = BagRandomizer.GetNewBag();
         Tetromino currentTetromino;
+        Tetromino heldTetromino;
+        Tetromino tempTetromino;
 
         private KeyboardState currentKeyboardState;
         private KeyboardState lastKeyboardState;
@@ -44,9 +47,11 @@ namespace Tetris
         int linesCleared;
 
         bool isBlockPlaced = false;
+        bool blockHeld = false;
 
         static List<Vector2> CurrentBlockPositions;
 
+        Tetromino.rotations currentRotation;
 
 
 
@@ -60,49 +65,8 @@ namespace Tetris
 
         string theme = PlayPage.P1.GetTheme();
 
-        char?[,] board = new char?[40, 10] {
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, null, null, null, null, null, null, null, null },
-        { null, null, 's', null, null, null, null, null, null, null },
-        { null, null, 's', 's', null, null, null, null, null, 'i' },
-        { 'l', 'o', 'o', 's', 'j', 'j', 'j', null, null, 'i' },
-        { 'l', 'o', 'o', 't', 'z', 'z', 'j', null, null, 'i' },
-        { 'l', 'l', 't', 't', 't', 'z', 'z', null, null, 'i' },
-        }; //TEST
-        char[,] temp = new char[40, 10];
+        char?[,] board = new char?[40, 10];
+
 
         public Game1()
         {
@@ -161,7 +125,6 @@ namespace Tetris
             fileStream.Dispose();
         }
 
-
         protected override void UnloadContent()
         {
             IBlockTex.Dispose();
@@ -196,10 +159,12 @@ namespace Tetris
                 currentTetromino = nextTetromino[0];
                 CurrentBlockPositions = currentTetromino.StartingPosition();
                 nextTetromino.RemoveAt(0);
-                UWPConsole.Console.WriteLine($"current: {currentTetromino.PieceSymbol()}");
-                UWPConsole.Console.WriteLine($"next: {nextTetromino[0].PieceSymbol()}");
-                UWPConsole.Console.WriteLine($"queued: {nextTetromino.Count}");
+                currentRotation = Tetromino.rotations.rotation1;
+                //UWPConsole.Console.WriteLine($"current: {currentTetromino.PieceSymbol()}");
+                //UWPConsole.Console.WriteLine($"next: {nextTetromino[0].PieceSymbol()}");
+                //UWPConsole.Console.WriteLine($"queued: {nextTetromino.Count}");
                 isBlockPlaced = false;
+                blockHeld = false;
             }
 
             timer += timepassed;
@@ -208,10 +173,25 @@ namespace Tetris
                 Move(Directions.Down);
                 timer = 0;
             }
-            
 
-
-
+            if (blockHeld == false && (GamePad.GetState(PlayerIndex.One).Buttons.LeftShoulder == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift)))
+            {
+                if (heldTetromino == null)
+                {
+                    heldTetromino = currentTetromino;
+                    currentTetromino = nextTetromino[0];
+                    CurrentBlockPositions = currentTetromino.StartingPosition();
+                    nextTetromino.RemoveAt(0);
+                }
+                else
+                {
+                    tempTetromino = currentTetromino;
+                    currentTetromino = heldTetromino;
+                    heldTetromino = tempTetromino;
+                    CurrentBlockPositions = currentTetromino.StartingPosition();
+                }
+                blockHeld = true;
+            }
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
@@ -219,20 +199,14 @@ namespace Tetris
                 isBlockPlaced = true;
             }
 
-
-
             if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed  || currentKeyboardState.IsKeyDown(Keys.Left) && lastKeyboardState.IsKeyUp(Keys.Left))
             {
-
                 Move(Directions.Left);
-
-
             }
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Right) && lastKeyboardState.IsKeyUp(Keys.Right))
             {
                 Move(Directions.Right);
-
             }
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Down) && lastKeyboardState.IsKeyUp(Keys.Down))
@@ -242,33 +216,94 @@ namespace Tetris
 
 
 
+
+            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
+            {
+                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise);
+                if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
+                else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation3;
+                else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation4;
+                else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation1;
+            }
+
+
+            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
+            {
+                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise);
+                if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation4;
+                else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation1;
+                else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation2;
+                else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation3;
+            }
+
+
             lastKeyboardState = currentKeyboardState;
 
             // TODO: Add your update logic here
             base.Update(gameTime);
         }
 
+        public int MaxPositionX()
+        {
+            int max = 0;
+            foreach(Vector2 v in CurrentBlockPositions)
+            {
+                if (v.X > max) max = (int)v.X;
+            }
+            return max;
+        }
+
+        public int MinPositionX()
+        {
+            int min = 10;
+            foreach (Vector2 v in CurrentBlockPositions)
+            {
+                if (v.X < min) min = (int)v.X;
+            }
+            return min;
+        }
 
         public void Move(Directions direction)
         {
             switch (direction)
             {
                 case Directions.Left:
-                    for(int i = 0; i < CurrentBlockPositions.Count; i++)
+                    if (MinPositionX() - 1 >= 0)
                     {
-                        CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                        {
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                     break;
                 case Directions.Right:
-                    for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                    if (MaxPositionX() + 1 < 10)
                     {
-                        CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
+                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                        {
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                     break;
                 case Directions.Down:
                     for (int i = 0; i < CurrentBlockPositions.Count; i++)
                     {
-                        CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X, CurrentBlockPositions[i].Y + 1);
+                        if (CurrentBlockPositions[i].Y + 1 < 20)
+                        {
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X, CurrentBlockPositions[i].Y + 1);
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                     break;
             }
@@ -306,32 +341,33 @@ namespace Tetris
 
             GraphicsDevice.SetRenderTarget(null);
 
-            /*
             GraphicsDevice.SetRenderTarget(holdRenderer);
             GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
 
-
-            foreach (Vector2 v in nextTetromino[i].StartingPosition()) 
+            if (heldTetromino != null)
             {
-                Rectangle kloc = new Rectangle(((int)v.X - 3) * 44, ((int)v.Y + 2) * 44 , 44, 44);
-         
-                if (nextTetromino[i].PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
-                if (nextTetromino[i].PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
-        
+                foreach (Vector2 v in heldTetromino.StartingPosition())
+                {
+                    Rectangle kloc = new Rectangle(((int)v.X - 3) * 44, ((int)v.Y + 2) * 44, 44, 44);
+
+                    if (heldTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+
+                }
             }
 
 
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            */
+            
 
 
             GraphicsDevice.SetRenderTarget(boardRenderer);
@@ -377,7 +413,7 @@ namespace Tetris
             spriteBatch.Draw(GridTex, new Rectangle(740, 100, 440, 880), Color.White);
             spriteBatch.Draw(boardRenderer, new Rectangle(740, 100, 440, 880), Color.White);
             spriteBatch.Draw(nextRenderer, new Rectangle(1220, 119, 140, 462), Color.White);
-            //spriteBatch.Draw(holdRenderer, new Rectangle(0, 0, 264, 264), Color.White);
+            spriteBatch.Draw(holdRenderer, new Rectangle(600, 124, 140, 140), Color.White);
             spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
 
             spriteBatch.End();
