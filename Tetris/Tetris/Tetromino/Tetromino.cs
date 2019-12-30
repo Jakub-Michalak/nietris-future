@@ -27,7 +27,7 @@ namespace Tetris
             rotation4
         }
 
-        public virtual List<Vector2> Rotate(List<Vector2> current, rotations currentRotation, rotationDirection direction)
+        public virtual List<Vector2> Rotate(List<Vector2> current, rotations currentRotation, rotationDirection direction, ref char?[,] array)
         {
             return current;
 

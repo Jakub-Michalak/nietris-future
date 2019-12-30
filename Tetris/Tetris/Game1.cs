@@ -48,6 +48,7 @@ namespace Tetris
 
         bool isBlockPlaced = false;
         bool blockHeld = false;
+        bool canMove = false;
 
         static List<Vector2> CurrentBlockPositions;
 
@@ -65,7 +66,7 @@ namespace Tetris
 
         string theme = PlayPage.P1.GetTheme();
 
-        char?[,] board = new char?[40, 10];
+        char?[,] board = new char?[10, 40];
 
 
         public Game1()
@@ -218,28 +219,25 @@ namespace Tetris
             {
                 foreach(Vector2 v in CurrentBlockPositions)
                 {
-                    board[20 + (int)v.Y, (int)v.X] = currentTetromino.PieceSymbol();
+                    board[(int)v.X, 20 + (int)v.Y ] = currentTetromino.PieceSymbol();
                 }
                 isBlockPlaced = true;
             }
 
             for (int i = 0; i < 40; i++)
             {
-                if(board[i,0]!=null && board[i, 1] != null && board[i, 2] != null && board[i, 3] != null && board[i, 4] != null && board[i, 5] != null && board[i, 6] != null && board[i, 7] != null && board[i, 8] != null && board[i, 9] != null)
+                if (board[0, i] != null && board[1, i] != null && board[2, i] != null && board[3, i] != null && board[4, i] != null && board[5, i] != null && board[6, i] != null && board[7, i] != null && board[8, i] != null && board[9, i] != null) 
                 {
                     for (int j = 0; j < 10; j++) 
                     {
-                        board[i, j] = null;
+                        board[j, i] = null;
                     }
-
-
-                    
 
                     for(int k = i; k > 0 ;k-- )
                     {
                         for (int j = 0; j < 10; j++)
                         {
-                            board[k, j] = board[k - 1, j];
+                            board[j, k] = board[j, k - 1];
                         }
                     }
                 }
@@ -248,9 +246,9 @@ namespace Tetris
 
 
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
-                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise);
+                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise,ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
                 else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation3;
                 else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation4;
@@ -258,9 +256,9 @@ namespace Tetris
             }
 
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
             {
-                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise);
+                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation4;
                 else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation1;
                 else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation2;
@@ -294,6 +292,16 @@ namespace Tetris
             return min;
         }
 
+        public int MaxPositionY()
+        {
+            int max = 0;
+            foreach (Vector2 v in CurrentBlockPositions)
+            {
+                if (v.Y > max) max = (int)v.Y;
+            }
+            return max;
+        }
+
         public void Move(Directions direction)
         {
             switch (direction)
@@ -301,9 +309,24 @@ namespace Tetris
                 case Directions.Left:
                     if (MinPositionX() - 1 >= 0)
                     {
-                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                        foreach (Vector2 v in CurrentBlockPositions)
                         {
-                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                            if (board[(int)v.X - 1, 20 + (int)v.Y] == null)
+                            {
+                                canMove = true;
+                            }
+                            else
+                            {
+                                canMove = false;
+                                break;
+                            }
+                        }
+                        if (canMove == true)
+                        {
+                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                            {
+                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                            }
                         }
                     }
                     else
@@ -314,9 +337,24 @@ namespace Tetris
                 case Directions.Right:
                     if (MaxPositionX() + 1 < 10)
                     {
-                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                        foreach (Vector2 v in CurrentBlockPositions)
                         {
-                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
+                            if (board[(int)v.X + 1, 20 + (int)v.Y ] == null)
+                            {
+                                canMove = true;
+                            }
+                            else
+                            {
+                                canMove = false;
+                                break;
+                            }
+                        }
+                        if (canMove == true)
+                        {
+                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                            {
+                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
+                            }
                         }
                     }
                     else
@@ -325,16 +363,31 @@ namespace Tetris
                     }
                     break;
                 case Directions.Down:
-                    for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                    if (MaxPositionY() + 21 < 40)
                     {
-                        if (CurrentBlockPositions[i].Y + 1 < 20)
+                        foreach (Vector2 v in CurrentBlockPositions)
                         {
-                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X, CurrentBlockPositions[i].Y + 1);
+                            if (board[(int)v.X ,21 + (int)v.Y ] == null)
+                            {
+                                canMove = true;
+                            }
+                            else
+                            {
+                                canMove = false;
+                                break;
+                            }
                         }
-                        else
+                        if (canMove == true)
                         {
-                            break;
+                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                            {
+                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X , CurrentBlockPositions[i].Y + 1);
+                            }
                         }
+                    }
+                    else
+                    {
+                        break;
                     }
                     break;
             }
@@ -409,15 +462,15 @@ namespace Tetris
                 for (int j = 0; j < 10; j++)
                 {
                     Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
-                    
 
-                    if (board[i + 20, j] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
-                    if (board[i + 20, j] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+
+                    if (board[j,i+20] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (board[j,i+20] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
                 }
             }
             foreach(Vector2 v in CurrentBlockPositions)
