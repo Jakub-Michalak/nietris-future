@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tetris
 {
-    class Tetromino
+    abstract class Tetromino
     {
         public int x = 5;
         public int y = 10;
@@ -27,8 +27,32 @@ namespace Tetris
             rotation4
         }
 
+        public abstract Vector2 getCenter(List<Vector2> current);
+
         public virtual List<Vector2> Rotate(List<Vector2> current, rotations currentRotation, rotationDirection direction, ref char?[,] array)
         {
+            Vector2 center = getCenter(current);
+
+            if (direction == rotationDirection.clockwise)
+            {
+                List<Vector2> newcurrent = new List<Vector2>();
+                foreach (Vector2 v in current)
+                {
+                    newcurrent.Add(RotatePointClockwise(v, center));
+                }
+                return newcurrent;
+            }
+
+            if (direction == rotationDirection.counterclockwise)
+            {
+                List<Vector2> newcurrent = new List<Vector2>();
+                foreach (Vector2 v in current)
+                {
+                    newcurrent.Add(RotatePointCounterClockwise(v, center));
+                }
+                return newcurrent;
+            }
+
             return current;
 
         }
@@ -53,8 +77,16 @@ namespace Tetris
             return null;
         }
 
+        public Vector2 RotatePointClockwise(Vector2 current, Vector2 center)
+        {
+            return new Vector2(current.Y - center.Y + center.X, -current.X + center.X + center.Y);
+        }
+
+        public Vector2 RotatePointCounterClockwise(Vector2 current, Vector2 center)
+        {
+            return new Vector2(-current.Y + center.Y + center.X, current.X - center.X + center.Y);
+        }
 
 
-    
     }
 }
