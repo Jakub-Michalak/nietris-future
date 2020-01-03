@@ -43,8 +43,13 @@ namespace Tetris
         private KeyboardState lastKeyboardState;
 
         int level = 1;
-        int score;
-        int linesCleared;
+        int score = 0;
+        int linesCleared = 0;
+        int singleCleared = 0;
+        int doublesCleared = 0;
+        int tripleCleared = 0;
+        int tetrisCleared = 0;
+        int linesClearedSimultaneously;
 
         bool isBlockPlaced = false;
         bool blockHeld = false;
@@ -139,6 +144,34 @@ namespace Tetris
             OverlayTex.Dispose();
         }
 
+        protected void DeleteLines()
+        {
+            linesClearedSimultaneously = 0;
+            for (int i = 0; i < 40; i++)
+            {
+                if (board[0, i] != null && board[1, i] != null && board[2, i] != null && board[3, i] != null && board[4, i] != null && board[5, i] != null && board[6, i] != null && board[7, i] != null && board[8, i] != null && board[9, i] != null)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        board[j, i] = null;  
+                    }
+
+                    for (int k = i; k > 0; k--)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            board[j, k] = board[j, k - 1];
+                        }
+                    }
+                    linesClearedSimultaneously++;
+                }
+            }
+            if (linesClearedSimultaneously == 1) singleCleared++;
+            if (linesClearedSimultaneously == 2) doublesCleared++;
+            if (linesClearedSimultaneously == 3) tripleCleared++;
+            if (linesClearedSimultaneously == 4) tetrisCleared++;
+        }
+
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
@@ -224,24 +257,7 @@ namespace Tetris
                 isBlockPlaced = true;
             }
 
-            for (int i = 0; i < 40; i++)
-            {
-                if (board[0, i] != null && board[1, i] != null && board[2, i] != null && board[3, i] != null && board[4, i] != null && board[5, i] != null && board[6, i] != null && board[7, i] != null && board[8, i] != null && board[9, i] != null) 
-                {
-                    for (int j = 0; j < 10; j++) 
-                    {
-                        board[j, i] = null;
-                    }
-
-                    for(int k = i; k > 0 ;k-- )
-                    {
-                        for (int j = 0; j < 10; j++)
-                        {
-                            board[j, k] = board[j, k - 1];
-                        }
-                    }
-                }
-            }
+            DeleteLines();
 
 
 
