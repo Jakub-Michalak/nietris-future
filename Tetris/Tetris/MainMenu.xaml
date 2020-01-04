@@ -13,16 +13,17 @@
             <ColumnDefinition />
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Margin="40,138,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand"/>
+        <Button Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Margin="40,138,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Assets/Fonts/neuropolitical rg.ttf#Neuropolitical Rg"/>
 
-        <Button Grid.Column="0" x:Name="STATS" Content="STATS" HorizontalAlignment="Stretch" Margin="40,239,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand">
+        <Button Grid.Column="0" x:Name="STATS" Content="STATS" HorizontalAlignment="Stretch" Margin="40,239,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Neuropolitical Rg">
            
         </Button>
 
 
 
-        <Button Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Margin="40,338,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Quicksand"/>
+        <Button Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Margin="40,338,40,0" VerticalAlignment="Top" Height="65" Background="#33FFFFFF" BorderBrush="#FF00DEAD" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="24" FontFamily="Neuropolitical Rg"/>
 
-        <TextBlock Grid.Column="1" Margin="80,44,80,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="White" FontWeight="Bold" FontSize="72" Text="nieTris Future" HorizontalAlignment="Stretch" />
+
+        <Image Grid.Column="1" Margin="80,40,80,40" Source="Assets/nieTris logo.png"/>
     </Grid>
 </Page>

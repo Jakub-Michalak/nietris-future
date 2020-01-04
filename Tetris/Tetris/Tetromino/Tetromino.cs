@@ -60,33 +60,18 @@ namespace Tetris
        
 
         public virtual char? PieceSymbol() { return null; }
-        public virtual int[,] rotation1()
-        {
-            return null;
-        }
-        public virtual int[,] rotation2()
-        {
-            return null;
-        }
-        public virtual int[,] rotation3()
-        {
-            return null;
-        }
-        public virtual int[,] rotation4()
-        {
-            return null;
-        }
+
 
         public Vector2 RotatePointClockwise(Vector2 current, Vector2 center)
-        {
-            return new Vector2(current.Y - center.Y + center.X, -current.X + center.X + center.Y);
-        }
-
-        public Vector2 RotatePointCounterClockwise(Vector2 current, Vector2 center)
         {
             return new Vector2(-current.Y + center.Y + center.X, current.X - center.X + center.Y);
         }
 
+        public Vector2 RotatePointCounterClockwise(Vector2 current, Vector2 center)
+        {
+            return new Vector2(current.Y - center.Y + center.X, -current.X + center.X + center.Y);
+        }
 
+        
     }
 }
