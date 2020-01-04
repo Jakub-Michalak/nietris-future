@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>C:/Users/edogf/source/repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Audio/Default/nietrisbgm.mp3</SourceFile>
+  <SourceTime>2020-01-04T22:45:03.2240488+01:00</SourceTime>
+  <DestFile>C:/Users/edogf/source/repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Audio/Default/BGM.xnb</DestFile>
+  <DestTime>2020-01-04T23:04:48.0165708+01:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
+  <Processor>SongProcessor</Processor>
+  <ProcessorTime>2018-12-08T17:35:54+01:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput>
+    <string>C:/Users/edogf/source/repos/Jakub-Michalak/nietris-future/Tetris/Tetris/Content/Audio/Default/BGM.wma</string>
+  </BuildOutput>
+</PipelineBuildEvent>

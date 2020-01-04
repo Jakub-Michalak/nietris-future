@@ -205,27 +205,16 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <Content Include="Content\Themes\Dark\BCG.jpg" />
-    <Content Include="Content\Themes\Dark\Overlay.png" />
-    <Content Include="Content\Themes\Default1\BCG.jpg" />
-    <Content Include="Content\Themes\Default1\I.png" />
-    <Content Include="Content\Themes\Default1\J.png" />
-    <Content Include="Content\Themes\Default1\L.png" />
-    <Content Include="Content\Themes\Default1\O.png" />
-    <Content Include="Content\Themes\Default1\Overlay.png" />
-    <Content Include="Content\Themes\Default1\S.png" />
-    <Content Include="Content\Themes\Default1\T.png" />
-    <Content Include="Content\Themes\Default1\Z.png" />
-    <Content Include="Content\Themes\Default\BCG.jpg" />
-    <Content Include="Content\Themes\Default\Grid.png" />
-    <Content Include="Content\Themes\Default\I.png" />
-    <Content Include="Content\Themes\Default\J.png" />
-    <Content Include="Content\Themes\Default\L.png" />
-    <Content Include="Content\Themes\Default\O.png" />
-    <Content Include="Content\Themes\Default\Overlay.png" />
-    <Content Include="Content\Themes\Default\S.png" />
-    <Content Include="Content\Themes\Default\T.png" />
-    <Content Include="Content\Themes\Default\Z.png" />
+    <Content Include="Content\Themes\Retro\BCG.jpg" />
+    <Content Include="Content\Themes\Retro\Grid.png" />
+    <Content Include="Content\Themes\Retro\I.png" />
+    <Content Include="Content\Themes\Retro\J.png" />
+    <Content Include="Content\Themes\Retro\L.png" />
+    <Content Include="Content\Themes\Retro\O.png" />
+    <Content Include="Content\Themes\Retro\Overlay.png" />
+    <Content Include="Content\Themes\Retro\S.png" />
+    <Content Include="Content\Themes\Retro\T.png" />
+    <Content Include="Content\Themes\Retro\Z.png" />
     <Content Include="Content\Themes\Eggplant\BCG.jpg" />
     <Content Include="Content\Themes\Eggplant\Grid.png" />
     <Content Include="Content\Themes\Eggplant\I.png" />
@@ -246,7 +235,6 @@
     <Content Include="Content\Themes\Neon\S.png" />
     <Content Include="Content\Themes\Neon\T.png" />
     <Content Include="Content\Themes\Neon\Z.png" />
-    <Content Include="Content\Themes\Test\BCG.jpg" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

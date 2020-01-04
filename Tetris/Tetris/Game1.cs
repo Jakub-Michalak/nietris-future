@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,6 +71,7 @@ namespace Tetris
         }
 
         string theme = PlayPage.P1.GetTheme();
+        string audioPack = PlayPage.P1.GetAudioPack();
 
         char?[,] board = new char?[10, 40];
 
@@ -101,6 +103,7 @@ namespace Tetris
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Song BGM;
 
             themeRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
             boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
@@ -128,6 +131,9 @@ namespace Tetris
             OverlayTex = Texture2D.FromStream(GraphicsDevice, fileStream);
             fileStream = new FileStream($@"Content/Themes/{theme}/Grid.png", FileMode.Open, FileAccess.Read);
             GridTex = Texture2D.FromStream(GraphicsDevice, fileStream);
+            BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
+            MediaPlayer.Play(BGM);
+            MediaPlayer.IsRepeating = true;
             fileStream.Dispose();
         }
 

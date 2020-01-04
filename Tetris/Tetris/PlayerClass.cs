@@ -22,6 +22,11 @@ public class Player
         this.audioPack = audioPack;
     }
 
+    public string GetAudioPack()
+    {
+        return audioPack;
+    }
+
     public void SetRotationControls(string rotationControls)
     {
         this.rotationControls = rotationControls;

@@ -31,10 +31,10 @@
             <Button.Flyout>
                 <Flyout>
                     <StackPanel>
-                        <ComboBox SelectionChanged="SetTheme"  Header="Theme" PlaceholderText="Default" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="0,0,0,5">
-                            <x:String>Default</x:String>
-                            <x:String>Eggplant</x:String>
+                        <ComboBox SelectionChanged="SetTheme"  Header="Theme" PlaceholderText="Neon" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="0,0,0,5">
                             <x:String>Neon</x:String>
+                            <x:String>Eggplant</x:String>
+                            <x:String>Retro</x:String>
                         </ComboBox>
                         <ComboBox SelectionChanged="SetAudioPack"  Header="Audio pack" PlaceholderText="Default" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI" Margin="0,0,0,5">
                             <x:String>Default</x:String>

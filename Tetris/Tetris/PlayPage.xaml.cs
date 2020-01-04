@@ -18,7 +18,7 @@ namespace Tetris
         {
             this.InitializeComponent();
 
-            P1.SetTheme("Default");
+            P1.SetTheme("Neon");
             P1.SetAudioPack("Default");
             P1.SetRotationControls("Default");
         }
@@ -61,14 +61,14 @@ namespace Tetris
                 string controlsName = cb.SelectedValue.ToString();
                 switch (controlsName)
                 {
-                    case "Default":
-                        P1.SetTheme("Default");
+                    case "Neon":
+                        P1.SetTheme("Neon");
                         break;
                     case "Eggplant":
                         P1.SetTheme("Eggplant");
                         break;
-                    case "Neon":
-                        P1.SetTheme("Neon");
+                    case "Retro":
+                        P1.SetTheme("Retro");
                         break;
                 }
             }
