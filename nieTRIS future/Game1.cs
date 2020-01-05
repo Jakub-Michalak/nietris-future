@@ -48,6 +48,9 @@ namespace nieTRIS_future
         private KeyboardState currentKeyboardState;
         private KeyboardState lastKeyboardState;
 
+        private GamePadState currentGamepadState;
+        private GamePadState lastGamepadState;
+
         Color halfOpacityWhite = Color.White * 0.5f;
 
         int level = 1;
@@ -157,6 +160,7 @@ namespace nieTRIS_future
         {
             timepassed = gameTime.ElapsedGameTime.TotalSeconds;
             currentKeyboardState = Keyboard.GetState();
+            currentGamepadState = GamePad.GetState(PlayerIndex.One);
 
 
 
@@ -189,7 +193,7 @@ namespace nieTRIS_future
                 timer = 0;
             }
 
-            if (blockHeld == false && (GamePad.GetState(PlayerIndex.One).Buttons.LeftShoulder == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift)))
+            if (currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift))
             {
                 if (heldTetromino == null)
                 {
@@ -208,7 +212,7 @@ namespace nieTRIS_future
                 blockHeld = true;
             }
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadUp) && lastGamepadState.IsButtonUp(Buttons.DPadUp) || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
                 dropDistance = (int)CurrentGhostPositions[1].Y - (int)CurrentBlockPositions[1].Y;
                 CurrentBlockPositions = new List<Vector2>(CurrentGhostPositions);
@@ -222,22 +226,22 @@ namespace nieTRIS_future
                 isBlockPlaced = true;
             }
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Left == ButtonState.Pressed  || currentKeyboardState.IsKeyDown(Keys.Left) && lastKeyboardState.IsKeyUp(Keys.Left))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadLeft) && lastGamepadState.IsButtonUp(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left) && lastKeyboardState.IsKeyUp(Keys.Left))
             {
                 Move(Directions.Left);
             }
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Right == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Right) && lastKeyboardState.IsKeyUp(Keys.Right))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadRight) && lastGamepadState.IsButtonUp(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right) && lastKeyboardState.IsKeyUp(Keys.Right))
             {
                 Move(Directions.Right);
             }
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Down) && lastKeyboardState.IsKeyUp(Keys.Down))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadDown) && lastGamepadState.IsButtonUp(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down) && lastKeyboardState.IsKeyUp(Keys.Down))
             {
                 Move(Directions.Down);
             }
 
-            if (GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
+            if (currentKeyboardState.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
             {
                 foreach(Vector2 v in CurrentBlockPositions)
                 {
@@ -253,7 +257,7 @@ namespace nieTRIS_future
 
 
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
+            if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise,ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
@@ -263,7 +267,7 @@ namespace nieTRIS_future
             }
 
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
+            if (currentGamepadState.IsButtonDown(Buttons.A) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
             {
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation4;
@@ -275,6 +279,7 @@ namespace nieTRIS_future
             ghostBlock();
 
             lastKeyboardState = currentKeyboardState;
+            lastGamepadState = currentGamepadState;
 
             base.Update(gameTime);
         }

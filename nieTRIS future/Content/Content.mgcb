@@ -13,11 +13,113 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Default/harddrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/harddrop.wav
+
+#begin Audio/Default/lineclear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/lineclear.wav
+
 #begin Audio/Default/nietrisbgm.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Audio/Default/nietrisbgm.mp3;Audio/Default/BGM.mp3
+
+#begin Audio/Default/nietrisbgm.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/nietrisbgm.mp3
+
+#begin Audio/Default/rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/rotate.wav
+
+#begin Audio/Default/tetris.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/tetris.wav
+
+#begin Audio/Quake/harddrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Quake/harddrop.wav
+
+#begin Audio/Quake/lineclear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Quake/lineclear.wav
+
+#begin Audio/Quake/rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Quake/rotate.wav
+
+#begin Audio/Quake/tetris.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Quake/tetris.wav
+
+#begin Audio/Waterdrops/harddrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Waterdrops/harddrop.wav
+
+#begin Audio/Waterdrops/lineclear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Waterdrops/lineclear.wav
+
+#begin Audio/Waterdrops/rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Waterdrops/rotate.wav
+
+#begin Audio/Waterdrops/tetris.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Waterdrops/tetris.wav
+
+#begin Audio/Woop/harddrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Woop/harddrop.wav
+
+#begin Audio/Woop/lineclear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Woop/lineclear.wav
+
+#begin Audio/Woop/rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Woop/rotate.wav
+
+#begin Audio/Woop/tetris.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Woop/tetris.wav
 
 #begin Fonts/font.spritefont
 /importer:FontDescriptionImporter
