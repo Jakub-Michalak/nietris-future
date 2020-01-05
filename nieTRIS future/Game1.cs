@@ -56,6 +56,8 @@ namespace nieTRIS_future
         int tetrisCleared = 0;
         int linesClearedSimultaneously;
 
+        int countToFour = 0;
+
         bool isBlockPlaced = false;
         bool blockHeld = false;
 
@@ -347,13 +349,14 @@ namespace nieTRIS_future
             switch (direction)
             {
                 case Directions.Left:
+                    countToFour = 0;
                     if (MinPositionX(list) - 1 >= 0)
                     {
                         foreach (Vector2 v in list)
                         {
                             if (board[(int)v.X - 1, 20 + (int)v.Y] == null)
                             {
-                                return true;
+                                countToFour++;
                             }
                             else
                             {
@@ -361,15 +364,17 @@ namespace nieTRIS_future
                             }
                         }
                     }
+                    if (countToFour == 4) return true;
                     break;
                 case Directions.Right:
+                    countToFour = 0;
                     if (MaxPositionX(list) + 1 < 10)
                     {
                         foreach (Vector2 v in list)
                         {
                             if (board[(int)v.X + 1, 20 + (int)v.Y] == null)
                             {
-                                return true;
+                                countToFour++;
                             }
                             else
                             {
@@ -377,15 +382,17 @@ namespace nieTRIS_future
                             }
                         }
                     }
+                    if (countToFour == 4) return true;
                     break;
                 case Directions.Down:
+                    countToFour = 0;
                     if (MaxPositionY(list) + 21 < 40)
                     {
                         foreach (Vector2 v in list)
                         {
                             if (board[(int)v.X, 21 + (int)v.Y] == null)
                             {
-                                return true;
+                                countToFour++;
                             }
                             else
                             {
@@ -393,6 +400,7 @@ namespace nieTRIS_future
                             }
                         }
                     }
+                    if (countToFour == 4) return true;
                     break;
             }
             return false;
