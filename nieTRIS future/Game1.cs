@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -34,6 +35,7 @@ namespace nieTRIS_future
         Texture2D OverlayTex;
         Texture2D GridTex;
         Texture2D GhostTex;
+        Song BGM;
 
         public double timepassed;
         public double timer;
@@ -56,6 +58,7 @@ namespace nieTRIS_future
         int tripleCleared = 0;
         int tetrisCleared = 0;
         int linesClearedSimultaneously;
+        int dropDistance = 0;
 
         int countToFour = 0;
 
@@ -107,7 +110,7 @@ namespace nieTRIS_future
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Song BGM;
+            
 
             themeRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
             boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
@@ -143,8 +146,11 @@ namespace nieTRIS_future
             SBlockTex.Dispose();
             TBlockTex.Dispose();
             ZBlockTex.Dispose();
+            GhostTex.Dispose();
             BackgroundTex.Dispose();
             OverlayTex.Dispose();
+            GridTex.Dispose();
+            BGM.Dispose();
         }
 
         protected override void Update(GameTime gameTime)
@@ -204,6 +210,7 @@ namespace nieTRIS_future
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
+                dropDistance = (int)CurrentGhostPositions[1].Y - (int)CurrentBlockPositions[1].Y;
                 CurrentBlockPositions = new List<Vector2>(CurrentGhostPositions);
 
                 foreach (Vector2 v in CurrentBlockPositions)
@@ -211,7 +218,7 @@ namespace nieTRIS_future
                     board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
                 }
 
-                //HARD DROP
+                AddScore("hardDrop",dropDistance);
                 isBlockPlaced = true;
             }
 
@@ -310,10 +317,20 @@ namespace nieTRIS_future
                     linesCleared++;
                 }
             }
-            if (linesClearedSimultaneously == 1) singleCleared++;
-            if (linesClearedSimultaneously == 2) doublesCleared++;
-            if (linesClearedSimultaneously == 3) tripleCleared++;
-            if (linesClearedSimultaneously == 4) tetrisCleared++;
+            if (linesClearedSimultaneously == 1) { singleCleared++; AddScore("single"); }
+            if (linesClearedSimultaneously == 2) { doublesCleared++; AddScore("double"); }
+            if (linesClearedSimultaneously == 3) { tripleCleared++; AddScore("triple"); }
+            if (linesClearedSimultaneously == 4) { tetrisCleared++; AddScore("tetris"); }
+        }
+
+        protected void AddScore(string source, int dropDistance = 0)
+        {
+            if (source == "single") score = score + 100 * level;
+            else if (source == "double") score = score + 300 * level;
+            else if (source == "triple") score = score + 500 * level;
+            else if (source == "tetris") score = score + 800 * level;
+            else if (source == "hardDrop") score = score + 2 * dropDistance;
+
         }
 
         public int MaxPositionX(List<Vector2> list)
@@ -565,8 +582,11 @@ namespace nieTRIS_future
             spriteBatch.Draw(holdRenderer, new Rectangle(600, 124, 140, 140), Color.White);
             spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
 
-            spriteBatch.DrawString(neuro, $"SCORE: {score}", new Vector2(1220,650),Color.White );
-            spriteBatch.DrawString(neuro, $"CLEARED LINES: {linesCleared}", new Vector2(1220, 750), Color.White);
+            spriteBatch.DrawString(neuro, $"SCORE:", new Vector2(1220,650),Color.White );
+            spriteBatch.DrawString(neuro, $"{score}", new Vector2(1220, 700), Color.White);
+            spriteBatch.DrawString(neuro, $"CLEARED LINES:", new Vector2(1220, 775), Color.White);
+            spriteBatch.DrawString(neuro, $"{linesCleared}", new Vector2(1220, 825), Color.White);
+
 
             spriteBatch.End();
 
