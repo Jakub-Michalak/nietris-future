@@ -33,6 +33,7 @@ namespace nieTRIS_future
         Texture2D BackgroundTex;
         Texture2D OverlayTex;
         Texture2D GridTex;
+        Texture2D GhostTex;
 
         public double timepassed;
         public double timer;
@@ -121,6 +122,7 @@ namespace nieTRIS_future
             SBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/S");
             TBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/T");
             ZBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/Z");
+            GhostTex = Content.Load<Texture2D> ($@"Themes/{theme}/Ghost");
             BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
@@ -531,7 +533,11 @@ namespace nieTRIS_future
                     if (board[j,i+20] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
                 }
             }
-            foreach(Vector2 v in CurrentBlockPositions)
+            foreach (Vector2 v in CurrentGhostPositions)
+            {
+                if (currentTetromino.PieceSymbol() != null) spriteBatch.Draw(GhostTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+            }
+            foreach (Vector2 v in CurrentBlockPositions)
             {
                 if (currentTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                 if (currentTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
@@ -542,17 +548,7 @@ namespace nieTRIS_future
                 if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                                                 
             }
-            foreach (Vector2 v in CurrentGhostPositions)
-            {
-                if (currentTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-           
-            }
+
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);

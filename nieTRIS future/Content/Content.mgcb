@@ -158,7 +158,7 @@
 /processorParam:TextureFormat=Color
 /build:Themes/Neon/BCG.jpg
 
-#begin Themes/Neon/Grid.png
+#begin Themes/Neon/Ghost.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -168,7 +168,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Themes/Neon/Grid.png
+/build:Themes/Neon/Ghost.png
 
 #begin Themes/Neon/Grid.png
 /importer:TextureImporter
