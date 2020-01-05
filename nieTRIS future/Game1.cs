@@ -45,6 +45,8 @@ namespace nieTRIS_future
         private KeyboardState currentKeyboardState;
         private KeyboardState lastKeyboardState;
 
+        Color halfOpacityWhite = Color.White * 0.5f;
+
         int level = 1;
         int score = 0;
         int linesCleared = 0;
@@ -56,14 +58,12 @@ namespace nieTRIS_future
 
         bool isBlockPlaced = false;
         bool blockHeld = false;
-        bool canMove = false;
+
 
         static List<Vector2> CurrentBlockPositions;
+        static List<Vector2> CurrentGhostPositions;
 
         Tetromino.rotations currentRotation;
-
-
-
 
         public enum Directions
         {
@@ -76,7 +76,6 @@ namespace nieTRIS_future
         string audioPack = PlayPage.P1.GetAudioPack();
 
         char?[,] board = new char?[10, 40];
-
 
         public Game1()
         {
@@ -97,10 +96,10 @@ namespace nieTRIS_future
             CurrentBlockPositions = currentTetromino.StartingPosition();
 
 
+
+
             base.Initialize();
         }
-
-       
 
         protected override void LoadContent()
         {
@@ -124,10 +123,10 @@ namespace nieTRIS_future
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
             BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
-            MediaPlayer.Play(BGM);
-            MediaPlayer.IsRepeating = true;
-
             neuro = Content.Load<SpriteFont>("Fonts/font");
+
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(BGM);
 
         }
 
@@ -144,42 +143,11 @@ namespace nieTRIS_future
             OverlayTex.Dispose();
         }
 
-        protected void DeleteLines()
-        {
-            linesClearedSimultaneously = 0;
-            for (int i = 0; i < 40; i++)
-            {
-                if (board[0, i] != null && board[1, i] != null && board[2, i] != null && board[3, i] != null && board[4, i] != null && board[5, i] != null && board[6, i] != null && board[7, i] != null && board[8, i] != null && board[9, i] != null)
-                {
-                    for (int j = 0; j < 10; j++)
-                    {
-                        board[j, i] = null;  
-                    }
-
-                    for (int k = i; k > 0; k--)
-                    {
-                        for (int j = 0; j < 10; j++)
-                        {
-                            board[j, k] = board[j, k - 1];
-                            
-                        }
-                        
-                    }
-                    linesClearedSimultaneously++;
-                    linesCleared++;
-                }
-            }
-            if (linesClearedSimultaneously == 1) singleCleared++;
-            if (linesClearedSimultaneously == 2) doublesCleared++;
-            if (linesClearedSimultaneously == 3) tripleCleared++;
-            if (linesClearedSimultaneously == 4) tetrisCleared++;
-        }
-
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             timepassed = gameTime.ElapsedGameTime.TotalSeconds;
             currentKeyboardState = Keyboard.GetState();
+
 
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -232,6 +200,13 @@ namespace nieTRIS_future
 
             if (GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
+                CurrentBlockPositions = new List<Vector2>(CurrentGhostPositions);
+
+                foreach (Vector2 v in CurrentBlockPositions)
+                {
+                    board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
+                }
+
                 //HARD DROP
                 isBlockPlaced = true;
             }
@@ -262,6 +237,8 @@ namespace nieTRIS_future
 
             DeleteLines();
 
+            
+
 
 
 
@@ -284,68 +261,154 @@ namespace nieTRIS_future
                 else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation3;
             }
 
+            ghostBlock();
 
             lastKeyboardState = currentKeyboardState;
 
-            // TODO: Add your update logic here
             base.Update(gameTime);
         }
 
-        public int MaxPositionX()
+        public void ghostBlock()
+        {
+            CurrentGhostPositions = new List<Vector2>(CurrentBlockPositions);
+            while (CanMove(Directions.Down, CurrentGhostPositions) == true)
+            {
+                for (int i = 0; i < CurrentGhostPositions.Count; i++)
+                {
+                    CurrentGhostPositions[i] = new Vector2(CurrentGhostPositions[i].X, CurrentGhostPositions[i].Y + 1);
+                }
+            }
+
+        }
+
+        protected void DeleteLines()
+        {
+            linesClearedSimultaneously = 0;
+            for (int i = 0; i < 40; i++)
+            {
+                if (board[0, i] != null && board[1, i] != null && board[2, i] != null && board[3, i] != null && board[4, i] != null && board[5, i] != null && board[6, i] != null && board[7, i] != null && board[8, i] != null && board[9, i] != null)
+                {
+                    for (int j = 0; j < 10; j++)
+                    {
+                        board[j, i] = null;
+                    }
+
+                    for (int k = i; k > 0; k--)
+                    {
+                        for (int j = 0; j < 10; j++)
+                        {
+                            board[j, k] = board[j, k - 1];
+
+                        }
+
+                    }
+                    linesClearedSimultaneously++;
+                    linesCleared++;
+                }
+            }
+            if (linesClearedSimultaneously == 1) singleCleared++;
+            if (linesClearedSimultaneously == 2) doublesCleared++;
+            if (linesClearedSimultaneously == 3) tripleCleared++;
+            if (linesClearedSimultaneously == 4) tetrisCleared++;
+        }
+
+        public int MaxPositionX(List<Vector2> list)
         {
             int max = 0;
-            foreach(Vector2 v in CurrentBlockPositions)
+            foreach(Vector2 v in list)
             {
                 if (v.X > max) max = (int)v.X;
             }
             return max;
         }
 
-        public int MinPositionX()
+        public int MinPositionX(List<Vector2> list)
         {
             int min = 10;
-            foreach (Vector2 v in CurrentBlockPositions)
+            foreach (Vector2 v in list)
             {
                 if (v.X < min) min = (int)v.X;
             }
             return min;
         }
 
-        public int MaxPositionY()
+        public int MaxPositionY(List<Vector2> list)
         {
             int max = 0;
-            foreach (Vector2 v in CurrentBlockPositions)
+            foreach (Vector2 v in list)
             {
                 if (v.Y > max) max = (int)v.Y;
             }
             return max;
         }
 
-        public void Move(Directions direction)
+        public bool CanMove(Directions direction, List<Vector2> list)
         {
             switch (direction)
             {
                 case Directions.Left:
-                    if (MinPositionX() - 1 >= 0)
+                    if (MinPositionX(list) - 1 >= 0)
                     {
-                        foreach (Vector2 v in CurrentBlockPositions)
+                        foreach (Vector2 v in list)
                         {
                             if (board[(int)v.X - 1, 20 + (int)v.Y] == null)
                             {
-                                canMove = true;
+                                return true;
                             }
                             else
                             {
-                                canMove = false;
-                                break;
+                                return false;
                             }
                         }
-                        if (canMove == true)
+                    }
+                    break;
+                case Directions.Right:
+                    if (MaxPositionX(list) + 1 < 10)
+                    {
+                        foreach (Vector2 v in list)
                         {
-                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                            if (board[(int)v.X + 1, 20 + (int)v.Y] == null)
                             {
-                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                                return true;
                             }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    break;
+                case Directions.Down:
+                    if (MaxPositionY(list) + 21 < 40)
+                    {
+                        foreach (Vector2 v in list)
+                        {
+                            if (board[(int)v.X, 21 + (int)v.Y] == null)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    break;
+            }
+            return false;
+        }
+
+        public void Move(Directions direction)
+        {
+
+            switch (direction)
+            {
+                case Directions.Left:
+                    if (CanMove(Directions.Left, CurrentBlockPositions) == true)
+                    {
+                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
+                        {
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
                         }
                     }
                     else
@@ -354,26 +417,11 @@ namespace nieTRIS_future
                     }
                     break;
                 case Directions.Right:
-                    if (MaxPositionX() + 1 < 10)
+                    if (CanMove(Directions.Right, CurrentBlockPositions) == true)
                     {
-                        foreach (Vector2 v in CurrentBlockPositions)
+                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
                         {
-                            if (board[(int)v.X + 1, 20 + (int)v.Y ] == null)
-                            {
-                                canMove = true;
-                            }
-                            else
-                            {
-                                canMove = false;
-                                break;
-                            }
-                        }
-                        if (canMove == true)
-                        {
-                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
-                            {
-                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
-                            }
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
                         }
                     }
                     else
@@ -382,26 +430,12 @@ namespace nieTRIS_future
                     }
                     break;
                 case Directions.Down:
-                    if (MaxPositionY() + 21 < 40)
+                   
+                    if (CanMove(Directions.Down, CurrentBlockPositions) == true)
                     {
-                        foreach (Vector2 v in CurrentBlockPositions)
+                        for (int i = 0; i < CurrentBlockPositions.Count; i++)
                         {
-                            if (board[(int)v.X ,21 + (int)v.Y ] == null)
-                            {
-                                canMove = true;
-                            }
-                            else
-                            {
-                                canMove = false;
-                                break;
-                            }
-                        }
-                        if (canMove == true)
-                        {
-                            for (int i = 0; i < CurrentBlockPositions.Count; i++)
-                            {
-                                CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X , CurrentBlockPositions[i].Y + 1);
-                            }
+                            CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X, CurrentBlockPositions[i].Y + 1);
                         }
                     }
                     else
@@ -411,9 +445,6 @@ namespace nieTRIS_future
                     break;
             }
         }
-
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-
 
         protected override void Draw(GameTime gameTime)
         {
@@ -502,6 +533,17 @@ namespace nieTRIS_future
                 if (currentTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                 if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                                                 
+            }
+            foreach (Vector2 v in CurrentGhostPositions)
+            {
+                if (currentTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+           
             }
             spriteBatch.End();
 
