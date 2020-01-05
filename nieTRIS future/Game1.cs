@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,7 +36,12 @@ namespace nieTRIS_future
         Texture2D OverlayTex;
         Texture2D GridTex;
         Texture2D GhostTex;
+
         Song BGM;
+        SoundEffect RotateSFX;
+        SoundEffect HarddropSFX;
+        SoundEffect LineclearSFX;
+        SoundEffect TetrisSFX;
 
         public double timepassed;
         public double timer;
@@ -90,7 +96,6 @@ namespace nieTRIS_future
         {
             graphics = new GraphicsDeviceManager(this);
 
-
             Content.RootDirectory = "Content";
         }
 
@@ -132,10 +137,17 @@ namespace nieTRIS_future
             BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
+
             BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
+            RotateSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/rotate");
+            HarddropSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/harddrop");
+            LineclearSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/lineclear");
+            TetrisSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/tetris");
+
             neuro = Content.Load<SpriteFont>("Fonts/font");
 
             MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(BGM);
 
         }
@@ -154,6 +166,10 @@ namespace nieTRIS_future
             OverlayTex.Dispose();
             GridTex.Dispose();
             BGM.Dispose();
+            RotateSFX.Dispose();
+            HarddropSFX.Dispose();
+            LineclearSFX.Dispose();
+            TetrisSFX.Dispose();
         }
 
         protected override void Update(GameTime gameTime)
@@ -221,7 +237,7 @@ namespace nieTRIS_future
                 {
                     board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
                 }
-
+                HarddropSFX.CreateInstance().Play();
                 AddScore("hardDrop",dropDistance);
                 isBlockPlaced = true;
             }
@@ -259,6 +275,7 @@ namespace nieTRIS_future
 
             if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
+                RotateSFX.CreateInstance().Play();
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise,ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
                 else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation3;
@@ -267,14 +284,17 @@ namespace nieTRIS_future
             }
 
 
-            if (currentGamepadState.IsButtonDown(Buttons.A) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
+            if (currentGamepadState.IsButtonDown(Buttons.A) && lastGamepadState.IsButtonUp(Buttons.A) || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
             {
+                RotateSFX.CreateInstance().Play();
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation4;
                 else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation1;
                 else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation2;
                 else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation3;
             }
+
+            
 
             ghostBlock();
 
@@ -322,10 +342,10 @@ namespace nieTRIS_future
                     linesCleared++;
                 }
             }
-            if (linesClearedSimultaneously == 1) { singleCleared++; AddScore("single"); }
-            if (linesClearedSimultaneously == 2) { doublesCleared++; AddScore("double"); }
-            if (linesClearedSimultaneously == 3) { tripleCleared++; AddScore("triple"); }
-            if (linesClearedSimultaneously == 4) { tetrisCleared++; AddScore("tetris"); }
+            if (linesClearedSimultaneously == 1) { singleCleared++; AddScore("single"); LineclearSFX.CreateInstance().Play(); }
+            if (linesClearedSimultaneously == 2) { doublesCleared++; AddScore("double"); LineclearSFX.CreateInstance().Play(); }
+            if (linesClearedSimultaneously == 3) { tripleCleared++; AddScore("triple"); LineclearSFX.CreateInstance().Play(); }
+            if (linesClearedSimultaneously == 4) { tetrisCleared++; AddScore("tetris"); TetrisSFX.CreateInstance().Play(); }
         }
 
         protected void AddScore(string source, int dropDistance = 0)

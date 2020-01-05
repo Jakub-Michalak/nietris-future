@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid KeyUp="Grid_KeyDown" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Bottom">
-        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
+        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80" GotFocus="setFocusToPlayButton"/>
         <FlipView HorizontalAlignment="Center" Margin="0,90,0,90">
             <FlipView.Items>
                 <Grid>
@@ -26,8 +26,8 @@
                 </Grid>
             </FlipView.Items>
         </FlipView>
-        <Button Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="20,0,260,22" VerticalAlignment="Bottom" Width="200" FontSize="24" FontWeight="Bold"/>
-        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="260,0,0,22" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Width="200">
+        <Button x:Name="PlayButton" Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="20,0,260,22" VerticalAlignment="Bottom" Width="200" FontSize="24" FontWeight="Bold"/>
+        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="260,0,0,22" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Width="200" Click="customizationMenuFocused">
             <Button.Flyout>
                 <Flyout>
                     <StackPanel>

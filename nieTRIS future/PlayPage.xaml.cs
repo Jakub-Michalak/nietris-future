@@ -12,6 +12,7 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class PlayPage : Page
     {
+        bool customizationFocused = false;
         public static Player P1 = new Player();
 
         public PlayPage()
@@ -21,6 +22,22 @@ namespace nieTRIS_future
             P1.SetTheme("Neon");
             P1.SetAudioPack("Default");
             P1.SetRotationControls("Default");
+        }
+
+
+        private void setFocusToPlayButton(object sender, RoutedEventArgs e)
+        {
+            PlayButton.Focus(FocusState.Programmatic);
+        }
+
+        private void customizationMenuFocused(object sender, RoutedEventArgs e)
+        {
+            customizationFocused = true;
+        }
+
+        private void customizationMenuLostFocus(object sender, RoutedEventArgs e)
+        {
+            customizationFocused = false;
         }
 
         private void NavigateToMainMenu(object sender, RoutedEventArgs e)
@@ -101,9 +118,8 @@ namespace nieTRIS_future
 
         private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-
-            if (e.Key == VirtualKey.Escape) this.Frame.Navigate(typeof(MainPage));
-
+            if (customizationFocused == true) customizationFocused = false;
+            else if (e.Key == VirtualKey.Escape && customizationFocused == false) this.Frame.Navigate(typeof(MainPage));
         }
     }
 }

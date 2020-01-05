@@ -140,6 +140,8 @@
     <Content Include="Assets\AppImages\SplashScreen.scale-100.png" />
     <Content Include="Assets\AppImages\SplashScreen.scale-200.png" />
     <Content Include="Assets\AppImages\SplashScreen.scale-400.png" />
+    <Content Include="Assets\button_on.png" />
+    <Content Include="Assets\button_semi.png" />
     <Content Include="Assets\Fonts\neuropolitical rg.ttf" />
     <None Include="nieTRIS future_TemporaryKey.pfx" />
   </ItemGroup>
