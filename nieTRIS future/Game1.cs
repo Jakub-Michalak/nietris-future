@@ -16,6 +16,8 @@ namespace nieTRIS_future
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        SpriteFont neuro;
+
         RenderTarget2D themeRenderer;
         RenderTarget2D boardRenderer;
         RenderTarget2D nextRenderer;
@@ -110,31 +112,23 @@ namespace nieTRIS_future
             nextRenderer = new RenderTarget2D(GraphicsDevice, 264, 880 );
             holdRenderer = new RenderTarget2D(GraphicsDevice, 264, 264);
 
-            FileStream fileStream;
-            fileStream = new FileStream($@"Content/Themes/{theme}/I.png", FileMode.Open, FileAccess.Read);
-            IBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/J.png", FileMode.Open, FileAccess.Read);
-            JBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/L.png", FileMode.Open, FileAccess.Read);
-            LBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/O.png", FileMode.Open, FileAccess.Read);
-            OBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/S.png", FileMode.Open, FileAccess.Read);
-            SBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/T.png", FileMode.Open, FileAccess.Read);
-            TBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/Z.png", FileMode.Open, FileAccess.Read);
-            ZBlockTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/BCG.jpg", FileMode.Open, FileAccess.Read);
-            BackgroundTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/Overlay.png", FileMode.Open, FileAccess.Read);
-            OverlayTex = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream = new FileStream($@"Content/Themes/{theme}/Grid.png", FileMode.Open, FileAccess.Read);
-            GridTex = Texture2D.FromStream(GraphicsDevice, fileStream);
+
+            IBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/I");
+            JBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/J");
+            LBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/L");
+            OBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/O");
+            SBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/S");
+            TBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/T");
+            ZBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/Z");
+            BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
+            OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
+            GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
             BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
             MediaPlayer.Play(BGM);
             MediaPlayer.IsRepeating = true;
-            fileStream.Dispose();
+
+            neuro = Content.Load<SpriteFont>("Fonts/font");
+
         }
 
         protected override void UnloadContent()
@@ -167,9 +161,12 @@ namespace nieTRIS_future
                         for (int j = 0; j < 10; j++)
                         {
                             board[j, k] = board[j, k - 1];
+                            
                         }
+                        
                     }
                     linesClearedSimultaneously++;
+                    linesCleared++;
                 }
             }
             if (linesClearedSimultaneously == 1) singleCleared++;
@@ -516,11 +513,14 @@ namespace nieTRIS_future
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
             spriteBatch.Draw(BackgroundTex, new Rectangle(0, 0, 1920, 1080), Color.White);
-            spriteBatch.Draw(GridTex, new Rectangle(740, 100, 440, 880), Color.White);
+            spriteBatch.Draw(GridTex, new Rectangle(480, 0, 960, 1080), Color.White);
             spriteBatch.Draw(boardRenderer, new Rectangle(740, 100, 440, 880), Color.White);
             spriteBatch.Draw(nextRenderer, new Rectangle(1220, 119, 140, 462), Color.White);
             spriteBatch.Draw(holdRenderer, new Rectangle(600, 124, 140, 140), Color.White);
             spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
+
+            spriteBatch.DrawString(neuro, $"SCORE: {score}", new Vector2(1220,650),Color.White );
+            spriteBatch.DrawString(neuro, $"CLEARED LINES: {linesCleared}", new Vector2(1220, 750), Color.White);
 
             spriteBatch.End();
 
