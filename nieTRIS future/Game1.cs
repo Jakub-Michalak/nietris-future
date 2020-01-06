@@ -209,7 +209,7 @@ namespace nieTRIS_future
                 timer = 0;
             }
 
-            if (currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift))
+            if ((currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift))&& blockHeld==false)
             {
                 if (heldTetromino == null)
                 {
@@ -267,6 +267,12 @@ namespace nieTRIS_future
             }
 
             DeleteLines();
+
+
+            if(linesCleared >= level*10+10)
+            {
+                level++;
+            }
 
             
 
@@ -611,6 +617,9 @@ namespace nieTRIS_future
             spriteBatch.DrawString(neuro, $"{score}", new Vector2(1220, 700), Color.White);
             spriteBatch.DrawString(neuro, $"CLEARED LINES:", new Vector2(1220, 775), Color.White);
             spriteBatch.DrawString(neuro, $"{linesCleared}", new Vector2(1220, 825), Color.White);
+            spriteBatch.DrawString(neuro, $"LEVEL:", new Vector2(1220, 900), Color.White);
+            spriteBatch.DrawString(neuro, $"{level}", new Vector2(1220, 950), Color.White);
+
 
 
             spriteBatch.End();

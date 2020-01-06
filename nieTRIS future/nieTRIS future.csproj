@@ -105,6 +105,9 @@
     </Compile>
     <Compile Include="BagRandomizer.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="CreditsPage.xaml.cs">
+      <DependentUpon>CreditsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,7 @@
   <ItemGroup>
     <Content Include="Assets\FlipCovers\Marathon.png" />
     <Content Include="Assets\FlipCovers\sprint.png" />
+    <Content Include="Assets\motomoto.png" />
     <Content Include="Assets\nieTris logo.png" />
     <Content Include="Content\Themes\Eggplant\BCG.jpg" />
     <Content Include="Content\Themes\Eggplant\Grid.png" />
@@ -189,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CreditsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

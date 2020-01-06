@@ -63,6 +63,11 @@ namespace nieTRIS_future
             this.Frame.Navigate(typeof(StatsPage));
         }
 
+        private void NavigateToCreditsPage(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(CreditsPage));
+        }
+
 
         private void Exit(object sender, RoutedEventArgs e)
         {

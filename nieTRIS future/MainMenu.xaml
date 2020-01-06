@@ -37,7 +37,7 @@
                
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="3" Grid.Column="0" x:Name="CREDITS" Content="CREDITS" HorizontalAlignment="Stretch" Height="130"  Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="24" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="3" Grid.Column="0" x:Name="CREDITS" Content="CREDITS" HorizontalAlignment="Stretch" Height="130"  Click="NavigateToCreditsPage" Foreground="White" FontWeight="Bold" FontSize="24" UseSystemFocusVisuals="False">
                
             </Button>
 
