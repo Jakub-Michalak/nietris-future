@@ -31,6 +31,12 @@ namespace nieTRIS_future
         // Create the game.
         var launchArguments = string.Empty;
         _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+
+
     }
-}
+        private void NavigateToMainMenu(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+    }
 }
