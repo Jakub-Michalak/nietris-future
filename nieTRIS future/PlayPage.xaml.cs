@@ -1,6 +1,8 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+
+using System.Diagnostics;
 using Windows.System;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -13,6 +15,7 @@ namespace nieTRIS_future
     public sealed partial class PlayPage : Page
     {
         bool customizationFocused = false;
+        string selectedMode;
         public static Player P1 = new Player();
 
         public PlayPage()
@@ -24,6 +27,21 @@ namespace nieTRIS_future
             P1.SetRotationControls("Default");
         }
 
+        private void ModeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FlipView flipView = (FlipView)sender;
+            int position = flipView.SelectedIndex + 1;
+
+            switch (position)
+            {
+                case 1:
+                    selectedMode = "Marathon";
+                    break;
+                case 2:
+                    selectedMode = "Sprint";
+                    break;
+            }
+        }
 
         private void setFocusToPlayButton(object sender, RoutedEventArgs e)
         {

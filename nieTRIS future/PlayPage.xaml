@@ -10,15 +10,15 @@
 
     <Grid KeyUp="Grid_KeyDown" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Bottom">
         <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
-        <FlipView HorizontalAlignment="Center" Margin="0,90,0,90">
+        <FlipView x:Name="ModeSelector" SelectionChanged="ModeSelector_SelectionChanged" HorizontalAlignment="Center" Margin="0,90,0,90">
             <FlipView.Items>
-                <Grid>
+                <Grid x:Name="Marathon">
                     <Image Source="Assets\FlipCovers\Marathon.png" Stretch="Uniform" VerticalAlignment="Top"/>
                     <Border Background="#A5FFFFFF" VerticalAlignment="Bottom">
                         <TextBlock Text="Marathon" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
-                <Grid>
+                <Grid x:Name="Sprint">
                     <Image Source="Assets\FlipCovers\Sprint.png" Stretch="Uniform" VerticalAlignment="Top"/>
                     <Border Background="#A5FFFFFF" VerticalAlignment="Bottom">
                         <TextBlock Text="Sprint" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" VerticalAlignment="Center"/>
