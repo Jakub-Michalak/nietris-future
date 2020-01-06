@@ -14,7 +14,7 @@ using Windows.Foundation;
 namespace nieTRIS_future
 {
     public class Game1 : Game
-{
+    {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -45,6 +45,7 @@ namespace nieTRIS_future
 
         public double timepassed;
         public double timer;
+        public double lockTimer;
 
         List<Tetromino> nextTetromino = BagRandomizer.GetNewBag();
         Tetromino currentTetromino;
@@ -73,6 +74,7 @@ namespace nieTRIS_future
 
         bool isBlockPlaced = false;
         bool blockHeld = false;
+        bool blockCanMoveDown = true;
 
 
         static List<Vector2> CurrentBlockPositions;
@@ -118,11 +120,11 @@ namespace nieTRIS_future
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
 
             themeRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
             boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
-            nextRenderer = new RenderTarget2D(GraphicsDevice, 264, 880 );
+            nextRenderer = new RenderTarget2D(GraphicsDevice, 264, 880);
             holdRenderer = new RenderTarget2D(GraphicsDevice, 264, 264);
 
 
@@ -133,7 +135,7 @@ namespace nieTRIS_future
             SBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/S");
             TBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/T");
             ZBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/Z");
-            GhostTex = Content.Load<Texture2D> ($@"Themes/{theme}/Ghost");
+            GhostTex = Content.Load<Texture2D>($@"Themes/{theme}/Ghost");
             BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
@@ -198,18 +200,19 @@ namespace nieTRIS_future
                 //UWPConsole.Console.WriteLine($"current: {currentTetromino.PieceSymbol()}");
                 //UWPConsole.Console.WriteLine($"next: {nextTetromino[0].PieceSymbol()}");
                 //UWPConsole.Console.WriteLine($"queued: {nextTetromino.Count}");
+                blockCanMoveDown = true;
                 isBlockPlaced = false;
                 blockHeld = false;
             }
 
             timer += timepassed;
-            if(timer >= Math.Pow((0.8-((level-1)*0.007)),(level-1)))
+            if (timer >= Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))
             {
                 Move(Directions.Down);
                 timer = 0;
             }
 
-            if ((currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift))&& blockHeld==false)
+            if ((currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift)) && blockHeld == false)
             {
                 if (heldTetromino == null)
                 {
@@ -232,13 +235,9 @@ namespace nieTRIS_future
             {
                 dropDistance = (int)CurrentGhostPositions[1].Y - (int)CurrentBlockPositions[1].Y;
                 CurrentBlockPositions = new List<Vector2>(CurrentGhostPositions);
-
-                foreach (Vector2 v in CurrentBlockPositions)
-                {
-                    board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
-                }
+                PlaceBlock();
                 HarddropSFX.CreateInstance().Play();
-                AddScore("hardDrop",dropDistance);
+                AddScore("hardDrop", dropDistance);
                 isBlockPlaced = true;
             }
 
@@ -259,9 +258,9 @@ namespace nieTRIS_future
 
             if (currentKeyboardState.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
             {
-                foreach(Vector2 v in CurrentBlockPositions)
+                foreach (Vector2 v in CurrentBlockPositions)
                 {
-                    board[(int)v.X, 20 + (int)v.Y ] = currentTetromino.PieceSymbol();
+                    board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
                 }
                 isBlockPlaced = true;
             }
@@ -269,12 +268,24 @@ namespace nieTRIS_future
             DeleteLines();
 
 
-            if(linesCleared >= level*10+10)
+            if (linesCleared >= level * 10 + 10)
             {
                 level++;
             }
 
-            
+            if (blockCanMoveDown == false)
+            {
+                lockTimer += timepassed;
+                if (lockTimer >= 0.5)
+                {
+                    PlaceBlock();
+                    isBlockPlaced = true;
+                    lockTimer = 0;
+                }
+            }
+
+
+
 
 
 
@@ -282,7 +293,7 @@ namespace nieTRIS_future
             if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
                 RotateSFX.CreateInstance().Play();
-                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise,ref board);
+                CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
                 else if (currentRotation == Tetromino.rotations.rotation2) currentRotation = Tetromino.rotations.rotation3;
                 else if (currentRotation == Tetromino.rotations.rotation3) currentRotation = Tetromino.rotations.rotation4;
@@ -300,7 +311,7 @@ namespace nieTRIS_future
                 else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation3;
             }
 
-            
+
 
             ghostBlock();
 
@@ -367,7 +378,7 @@ namespace nieTRIS_future
         public int MaxPositionX(List<Vector2> list)
         {
             int max = 0;
-            foreach(Vector2 v in list)
+            foreach (Vector2 v in list)
             {
                 if (v.X > max) max = (int)v.X;
             }
@@ -392,6 +403,14 @@ namespace nieTRIS_future
                 if (v.Y > max) max = (int)v.Y;
             }
             return max;
+        }
+
+        public void PlaceBlock()
+        {
+            foreach (Vector2 v in CurrentBlockPositions)
+            {
+                board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
+            }
         }
 
         public bool CanMove(Directions direction, List<Vector2> list)
@@ -488,7 +507,7 @@ namespace nieTRIS_future
                     }
                     break;
                 case Directions.Down:
-                   
+
                     if (CanMove(Directions.Down, CurrentBlockPositions) == true)
                     {
                         for (int i = 0; i < CurrentBlockPositions.Count; i++)
@@ -498,6 +517,7 @@ namespace nieTRIS_future
                     }
                     else
                     {
+                        blockCanMoveDown = false;
                         break;
                     }
                     break;
@@ -513,10 +533,10 @@ namespace nieTRIS_future
             int starting = 1;
             for (int i = 0; i < 5; i++)
             {
-                
+
                 foreach (Vector2 v in nextTetromino[i].StartingPosition())
                 {
-                    Rectangle kloc = new Rectangle(((int)v.X-3) * 44,((int)v.Y+2) * 44 + ( 44 * starting), 44, 44);
+                    Rectangle kloc = new Rectangle(((int)v.X - 3) * 44, ((int)v.Y + 2) * 44 + (44 * starting), 44, 44);
 
                     if (nextTetromino[i].PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
                     if (nextTetromino[i].PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
@@ -559,7 +579,7 @@ namespace nieTRIS_future
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            
+
 
 
             GraphicsDevice.SetRenderTarget(boardRenderer);
@@ -572,13 +592,13 @@ namespace nieTRIS_future
                     Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
 
 
-                    if (board[j,i+20] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
-                    if (board[j,i+20] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
                 }
             }
             foreach (Vector2 v in CurrentGhostPositions)
@@ -594,7 +614,7 @@ namespace nieTRIS_future
                 if (currentTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                 if (currentTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
                 if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
-                                                
+
             }
 
             spriteBatch.End();
@@ -603,7 +623,7 @@ namespace nieTRIS_future
 
             GraphicsDevice.SetRenderTarget(themeRenderer);
             GraphicsDevice.Clear(Color.Transparent);
-            
+
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
             spriteBatch.Draw(BackgroundTex, new Rectangle(0, 0, 1920, 1080), Color.White);
@@ -613,7 +633,7 @@ namespace nieTRIS_future
             spriteBatch.Draw(holdRenderer, new Rectangle(600, 124, 140, 140), Color.White);
             spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
 
-            spriteBatch.DrawString(neuro, $"SCORE:", new Vector2(1220,650),Color.White );
+            spriteBatch.DrawString(neuro, $"SCORE:", new Vector2(1220, 650), Color.White);
             spriteBatch.DrawString(neuro, $"{score}", new Vector2(1220, 700), Color.White);
             spriteBatch.DrawString(neuro, $"CLEARED LINES:", new Vector2(1220, 775), Color.White);
             spriteBatch.DrawString(neuro, $"{linesCleared}", new Vector2(1220, 825), Color.White);
