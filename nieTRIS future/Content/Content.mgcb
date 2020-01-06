@@ -29,12 +29,6 @@
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Audio/Default/nietrisbgm.mp3;Audio/Default/BGM.mp3
-
-#begin Audio/Default/nietrisbgm.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
 /build:Audio/Default/nietrisbgm.mp3
 
 #begin Audio/Default/rotate.wav
@@ -139,6 +133,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Themes/Eggplant/BCG.jpg
+
+#begin Themes/Eggplant/ghost.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Themes/Eggplant/ghost.png
 
 #begin Themes/Eggplant/Grid.png
 /importer:TextureImporter
@@ -391,6 +397,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Themes/Retro/BCG.jpg
+
+#begin Themes/Retro/Ghost.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Themes/Retro/Ghost.png
 
 #begin Themes/Retro/Grid.png
 /importer:TextureImporter
