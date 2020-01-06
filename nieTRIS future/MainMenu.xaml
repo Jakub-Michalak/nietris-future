@@ -15,7 +15,10 @@
         <ImageBrush x:Key="ButtonOn" ImageSource="assets/button_on.png"/>
     </Page.Resources>
     
-    <Grid Background="Black">
+    <Grid >
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/background3.png"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="2*" />
