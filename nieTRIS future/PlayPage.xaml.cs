@@ -105,6 +105,9 @@ namespace nieTRIS_future
                     case "Retro":
                         P1.SetTheme("Retro");
                         break;
+                    case "Miku":
+                        P1.SetTheme("Miku");
+                        break;
                 }
             }
         }
