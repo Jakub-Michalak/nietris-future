@@ -130,6 +130,9 @@ namespace nieTRIS_future
                     case "Waterdrops":
                         P1.SetAudioPack("Waterdrops");
                         break;
+                    case "Miku":
+                        P1.SetAudioPack("Miku");
+                        break;
                 }
             }
         }

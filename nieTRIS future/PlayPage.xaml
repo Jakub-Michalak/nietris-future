@@ -41,6 +41,7 @@
                             <x:String>Quake</x:String>
                             <x:String>Woop</x:String>
                             <x:String>Waterdrops</x:String>
+                            <x:String>Miku</x:String>
                         </ComboBox>
                         <TextBlock Text="Rotation controls:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Normal" FontFamily="Segoe UI"/>
                         <RadioButton x:Name="Rotation_Default" GroupName="RotationControls" Content="Default" Tag="Default" Checked="SetRotationControls" IsChecked="true" HorizontalAlignment="Left" VerticalAlignment="Top"/>

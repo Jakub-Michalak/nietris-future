@@ -43,6 +43,36 @@
 /processorParam:Quality=Best
 /build:Audio/Default/tetris.wav
 
+#begin Audio/Miku/BGM.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Miku/BGM.wav
+
+#begin Audio/Miku/harddrop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Miku/harddrop.wav
+
+#begin Audio/Miku/lineclear.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Miku/lineclear.wav
+
+#begin Audio/Miku/rotate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Miku/rotate.wav
+
+#begin Audio/Miku/tetris.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/Miku/tetris.wav
+
 #begin Audio/Quake/harddrop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
