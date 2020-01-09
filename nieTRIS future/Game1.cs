@@ -10,11 +10,16 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml.Controls;
 
 namespace nieTRIS_future
 {
     public class Game1 : Game
     {
+
+        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -24,6 +29,7 @@ namespace nieTRIS_future
         RenderTarget2D boardRenderer;
         RenderTarget2D nextRenderer;
         RenderTarget2D holdRenderer;
+        RenderTarget2D pauseRenderer;
 
         Texture2D IBlockTex;
         Texture2D JBlockTex;
@@ -89,6 +95,15 @@ namespace nieTRIS_future
             Right
         }
 
+        public enum GameStates
+        {
+            Game,
+            Pause,
+            End
+        }
+
+        public GameStates currentGameState = GameStates.Game;
+
         string theme = PlayPage.P1.GetTheme();
         string audioPack = PlayPage.P1.GetAudioPack();
 
@@ -126,6 +141,7 @@ namespace nieTRIS_future
             boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
             nextRenderer = new RenderTarget2D(GraphicsDevice, 264, 880);
             holdRenderer = new RenderTarget2D(GraphicsDevice, 264, 264);
+            pauseRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
 
 
             IBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/I");
@@ -154,6 +170,20 @@ namespace nieTRIS_future
 
         }
 
+        //public async void Leave()
+        //{
+        //    Dispose(true);
+        //    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+        //                 CoreDispatcherPriority.High,
+        //                 () => {
+        //
+        //                     GamePage.rootFrame.Navigate(typeof(MainPage));
+        //                     //.MainMenu();
+        //
+        //                 });
+        //}
+        //
+
         protected override void UnloadContent()
         {
             IBlockTex.Dispose();
@@ -172,22 +202,44 @@ namespace nieTRIS_future
             HarddropSFX.Dispose();
             LineclearSFX.Dispose();
             TetrisSFX.Dispose();
+
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
+
             timepassed = gameTime.ElapsedGameTime.TotalSeconds;
             currentKeyboardState = Keyboard.GetState();
             currentGamepadState = GamePad.GetState(PlayerIndex.One);
 
-
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            switch (currentGameState)
             {
-                UnloadContent();
-                Exit();
-                //TODO: Wróć do MainPage/PlayPage
+                case GameStates.Game:
+                    GameUpdate();
+                    break;
+                case GameStates.Pause:
+                    PauseUpdate();
+                    break;
+                case GameStates.End:
+                    EndUpdate();
+                    break;
+                default:
+                    break;
             }
+            lastKeyboardState = currentKeyboardState;
+            lastGamepadState = currentGamepadState;
+            base.Update(gameTime);
+        }
+
+        private void GameUpdate()
+        {
+            if (currentGamepadState.IsButtonDown(Buttons.Start) && lastGamepadState.IsButtonUp(Buttons.Start) || currentKeyboardState.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P))
+            {
+                currentGameState = GameStates.Pause;
+            }
+
+
 
             if (nextTetromino.Count < 7) nextTetromino.AddRange(BagRandomizer.GetNewBag());
 
@@ -284,6 +336,8 @@ namespace nieTRIS_future
                 }
             }
 
+            Debug.WriteLine("loop dziala");
+
 
 
 
@@ -315,10 +369,21 @@ namespace nieTRIS_future
 
             ghostBlock();
 
-            lastKeyboardState = currentKeyboardState;
-            lastGamepadState = currentGamepadState;
 
-            base.Update(gameTime);
+
+        }
+
+        private void PauseUpdate()
+        {
+            if(currentGamepadState.IsButtonDown(Buttons.Start) && lastGamepadState.IsButtonUp(Buttons.Start) || currentKeyboardState.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P))
+            {
+                currentGameState = GameStates.Game;
+            }
+
+        }
+        private void EndUpdate()
+        {
+
         }
 
         public void ghostBlock()
@@ -527,6 +592,26 @@ namespace nieTRIS_future
         protected override void Draw(GameTime gameTime)
         {
 
+            switch (currentGameState)
+            {
+                case GameStates.Game:
+                    GameDraw();
+                    break;
+                case GameStates.Pause:
+                    PauseDraw();
+                    break;
+                default:
+                    break;
+            }
+
+
+
+            base.Draw(gameTime);
+        }
+
+        private void GameDraw()
+        {
+
             GraphicsDevice.SetRenderTarget(nextRenderer);
             GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
@@ -654,8 +739,152 @@ namespace nieTRIS_future
 
             spriteBatch.End();
 
+        }
+        private void PauseDraw()
+        {
+            GraphicsDevice.SetRenderTarget(nextRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            int starting = 1;
+            for (int i = 0; i < 5; i++)
+            {
 
-            base.Draw(gameTime);
+                foreach (Vector2 v in nextTetromino[i].StartingPosition())
+                {
+                    Rectangle kloc = new Rectangle(((int)v.X - 3) * 44, ((int)v.Y + 2) * 44 + (44 * starting), 44, 44);
+
+                    if (nextTetromino[i].PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (nextTetromino[i].PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+
+                }
+                starting += 4;
+            }
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            GraphicsDevice.SetRenderTarget(holdRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+
+            if (heldTetromino != null)
+            {
+                foreach (Vector2 v in heldTetromino.StartingPosition())
+                {
+                    Rectangle kloc = new Rectangle(((int)v.X - 3) * 44, ((int)v.Y + 2) * 44, 44, 44);
+
+                    if (heldTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (heldTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+
+                }
+            }
+
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+
+
+            GraphicsDevice.SetRenderTarget(boardRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    Rectangle kloc = new Rectangle(j * 44, i * 44, 44, 44);
+
+
+                    if (board[j, i + 20] == 'i') spriteBatch.Draw(IBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'o') spriteBatch.Draw(OBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 't') spriteBatch.Draw(TBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 's') spriteBatch.Draw(SBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'z') spriteBatch.Draw(ZBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'j') spriteBatch.Draw(JBlockTex, kloc, Color.White);
+                    if (board[j, i + 20] == 'l') spriteBatch.Draw(LBlockTex, kloc, Color.White);
+                }
+            }
+            foreach (Vector2 v in CurrentGhostPositions)
+            {
+                if (currentTetromino.PieceSymbol() != null) spriteBatch.Draw(GhostTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+            }
+            foreach (Vector2 v in CurrentBlockPositions)
+            {
+                if (currentTetromino.PieceSymbol() == 'i') spriteBatch.Draw(IBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'o') spriteBatch.Draw(OBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 't') spriteBatch.Draw(TBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 's') spriteBatch.Draw(SBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'z') spriteBatch.Draw(ZBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'j') spriteBatch.Draw(JBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+                if (currentTetromino.PieceSymbol() == 'l') spriteBatch.Draw(LBlockTex, new Rectangle((int)v.X * 44, (int)v.Y * 44, 44, 44), Color.White);
+
+            }
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            GraphicsDevice.SetRenderTarget(pauseRenderer);
+            GraphicsDevice.Clear(Color.Black * 0.5f);
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+            spriteBatch.DrawString(neuro, $"PAUSE", new Vector2(1, 1), Color.White);
+
+
+            spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+
+            GraphicsDevice.SetRenderTarget(themeRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+            spriteBatch.Draw(BackgroundTex, new Rectangle(0, 0, 1920, 1080), Color.White);
+            spriteBatch.Draw(GridTex, new Rectangle(480, 0, 960, 1080), Color.White);
+            spriteBatch.Draw(boardRenderer, new Rectangle(740, 100, 440, 880), Color.White);
+            spriteBatch.Draw(nextRenderer, new Rectangle(1220, 119, 140, 462), Color.White);
+            spriteBatch.Draw(holdRenderer, new Rectangle(600, 124, 140, 140), Color.White);
+            spriteBatch.Draw(OverlayTex, new Rectangle(480, 0, 960, 1080), Color.White);
+
+            spriteBatch.DrawString(neuro, $"SCORE:", new Vector2(1220, 650), Color.White);
+            spriteBatch.DrawString(neuro, $"{score}", new Vector2(1220, 700), Color.White);
+            spriteBatch.DrawString(neuro, $"CLEARED LINES:", new Vector2(1220, 775), Color.White);
+            spriteBatch.DrawString(neuro, $"{linesCleared}", new Vector2(1220, 825), Color.White);
+            spriteBatch.DrawString(neuro, $"LEVEL:", new Vector2(1220, 900), Color.White);
+            spriteBatch.DrawString(neuro, $"{level}", new Vector2(1220, 950), Color.White);
+
+            spriteBatch.Draw(pauseRenderer, new Rectangle(0, 0, 1920, 1080), Color.White);
+
+
+
+
+
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(themeRenderer, GraphicsDevice.Viewport.Bounds, Color.White);
+
+            spriteBatch.End();
+
+
         }
     }
 }

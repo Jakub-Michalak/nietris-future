@@ -2,12 +2,18 @@
     x:Class="nieTRIS_future.GamePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Tetris"
+    xmlns:local="using:nieTRIS_future"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+   >
 
     <SwapChainPanel x:Name="swapChainPanel">
-        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
+        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="-116,2,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Escape"/>
+            </Button.KeyboardAccelerators>
+        </Button>
+
     </SwapChainPanel>
 </Page>

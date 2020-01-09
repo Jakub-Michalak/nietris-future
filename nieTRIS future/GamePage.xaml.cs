@@ -22,21 +22,59 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class GamePage : Page
 {
-    readonly Game1 _game;
 
-    public GamePage()
+        //public static Frame rootFrame = Window.Current.Content as Frame;
+        Game1 _game;
+
+        public GamePage()
     {
         this.InitializeComponent();
+            
+        this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
-        // Create the game.
-        var launchArguments = string.Empty;
+            // Create the game.
+            var launchArguments = string.Empty;
         _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
 
 
     }
-        private void NavigateToMainMenu(object sender, RoutedEventArgs e)
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+
+            _game.currentGameState = Game1.GameStates.Pause;
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            _game.currentGameState = Game1.GameStates.Game;
+
+        }
+
+
+
+        public void NavigateToMainMenu(object sender, RoutedEventArgs e)
+        {
+
+            //Unload();
+            
+            Frame.Navigate(typeof(MainPage));
+            
+            //_game.Dispose();
+        }
+        public void MainMenu()
+        {
+            base.Frame.GoBack();
+            
+        }
+
+
+
+
+
+
+
+
+
     }
 }
