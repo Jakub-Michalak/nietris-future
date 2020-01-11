@@ -19,7 +19,6 @@ namespace nieTRIS_future
     public class Game1 : Game
     {
 
-        
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -119,17 +118,82 @@ namespace nieTRIS_future
         protected override void Initialize()
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0f);
-            score = 0;
 
-            IsFixedTimeStep = true;
+            Reset();
+
+            base.Initialize();
+        }
+
+        public void Load()
+        {
+            theme = PlayPage.P1.GetTheme();
+            audioPack = PlayPage.P1.GetAudioPack();
+
+
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+
+            themeRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+            boardRenderer = new RenderTarget2D(GraphicsDevice, 440, 880);
+            nextRenderer = new RenderTarget2D(GraphicsDevice, 264, 880);
+            holdRenderer = new RenderTarget2D(GraphicsDevice, 264, 264);
+            pauseRenderer = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+
+
+            IBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/I");
+            JBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/J");
+            LBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/L");
+            OBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/O");
+            SBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/S");
+            TBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/T");
+            ZBlockTex = Content.Load<Texture2D>($@"Themes/{theme}/Z");
+            GhostTex = Content.Load<Texture2D>($@"Themes/{theme}/Ghost");
+            BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
+            OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
+            GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
+
+            BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
+            RotateSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/rotate");
+            HarddropSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/harddrop");
+            LineclearSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/lineclear");
+            TetrisSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/tetris");
+
+            neuro = Content.Load<SpriteFont>("Fonts/font");
+
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Play(BGM);
+
+        }
+
+        public void Reset()
+        {
+            nextTetromino.Clear();
+            currentTetromino = null;
+            heldTetromino = null;
+
+            nextTetromino = BagRandomizer.GetNewBag();
+
+            level = 1;
+            score = 0;
+            linesCleared = 0;
+            singleCleared = 0;
+            doublesCleared = 0;
+            tripleCleared = 0;
+            tetrisCleared = 0;
+
+            Array.Clear(board, 0, 400);
+
+            isBlockPlaced = false;
+            blockHeld = false;
+            blockCanMoveDown = true;
+
             currentTetromino = nextTetromino[0];
             nextTetromino.RemoveAt(0);
             CurrentBlockPositions = currentTetromino.StartingPosition();
 
 
-
-
-            base.Initialize();
         }
 
         protected override void LoadContent()
@@ -169,20 +233,10 @@ namespace nieTRIS_future
             MediaPlayer.Play(BGM);
 
         }
-
-        //public async void Leave()
-        //{
-        //    Dispose(true);
-        //    await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-        //                 CoreDispatcherPriority.High,
-        //                 () => {
-        //
-        //                     GamePage.rootFrame.Navigate(typeof(MainPage));
-        //                     //.MainMenu();
-        //
-        //                 });
-        //}
-        //
+        public void MiuzikuStoppo()
+        {
+            MediaPlayer.Stop();
+        }
 
         protected override void UnloadContent()
         {
@@ -336,14 +390,6 @@ namespace nieTRIS_future
                 }
             }
 
-            Debug.WriteLine("loop dziala");
-
-
-
-
-
-
-
             if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
                 RotateSFX.CreateInstance().Play();
@@ -381,6 +427,7 @@ namespace nieTRIS_future
             }
 
         }
+
         private void EndUpdate()
         {
 
@@ -600,6 +647,9 @@ namespace nieTRIS_future
                 case GameStates.Pause:
                     PauseDraw();
                     break;
+                case GameStates.End:
+                    EndedDraw();
+                    break;
                 default:
                     break;
             }
@@ -740,6 +790,7 @@ namespace nieTRIS_future
             spriteBatch.End();
 
         }
+
         private void PauseDraw()
         {
             GraphicsDevice.SetRenderTarget(nextRenderer);
@@ -884,6 +935,11 @@ namespace nieTRIS_future
 
             spriteBatch.End();
 
+
+        }
+
+        private void EndedDraw()
+        {
 
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,55 +27,44 @@ namespace nieTRIS_future
         //public static Frame rootFrame = Window.Current.Content as Frame;
         Game1 _game;
 
+
         public GamePage()
     {
-        this.InitializeComponent();
+            this.InitializeComponent();
             
-        this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+            this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
 
             // Create the game.
             var launchArguments = string.Empty;
-        _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+            _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
 
 
-    }
+        }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
-
-            _game.currentGameState = Game1.GameStates.Pause;
+            _game.MiuzikuStoppo();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+
+            _game.Reset();
+            _game.Load();
             _game.currentGameState = Game1.GameStates.Game;
 
+            userControl.Focus(FocusState.Programmatic);
         }
 
-
-
-        public void NavigateToMainMenu(object sender, RoutedEventArgs e)
+        private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-
-            //Unload();
-            
-            Frame.Navigate(typeof(MainPage));
-            
-            //_game.Dispose();
+            Debug.WriteLine("cos wcisniete");
+            if (e.Key == Windows.System.VirtualKey.GamepadView || e.Key == Windows.System.VirtualKey.Q)
+            {
+                Debug.WriteLine("dziala");
+                _game.currentGameState = Game1.GameStates.End;
+                Frame.Navigate(typeof(MainPage));
+            }
         }
-        public void MainMenu()
-        {
-            base.Frame.GoBack();
-            
-        }
-
-
-
-
-
-
-
-
-
     }
 }
