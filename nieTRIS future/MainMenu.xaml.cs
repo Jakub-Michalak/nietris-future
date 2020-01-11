@@ -32,8 +32,8 @@ namespace nieTRIS_future
             
             ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            Windows.UI.Xaml.Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
 
-            
 
         }
 
