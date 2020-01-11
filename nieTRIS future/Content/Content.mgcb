@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/Default/BGM.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Default/BGM.mp3
+
 #begin Audio/Default/harddrop.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -24,12 +30,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Audio/Default/lineclear.wav
-
-#begin Audio/Default/nietrisbgm.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Audio/Default/nietrisbgm.mp3
 
 #begin Audio/Default/rotate.wav
 /importer:WavImporter
