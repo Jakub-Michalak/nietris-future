@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace nieTRIS_future
@@ -35,10 +36,15 @@ namespace nieTRIS_future
 
             if (direction == rotationDirection.clockwise)
             {
+
                 List<Vector2> newcurrent = new List<Vector2>();
                 foreach (Vector2 v in current)
                 {
                     newcurrent.Add(RotatePointClockwise(v, center));
+                }
+                foreach (Vector2 v in newcurrent)
+                {
+                    if (v.X < 0 || v.X > 9) { Debug.WriteLine("nie pozwalam na obrót"); return current; }
                 }
                 return newcurrent;
             }
@@ -49,6 +55,10 @@ namespace nieTRIS_future
                 foreach (Vector2 v in current)
                 {
                     newcurrent.Add(RotatePointCounterClockwise(v, center));
+                }
+                foreach (Vector2 v in newcurrent)
+                {
+                    if (v.X < 0 || v.X > 9) { Debug.WriteLine("nie pozwalam na obrót"); return current; }
                 }
                 return newcurrent;
             }

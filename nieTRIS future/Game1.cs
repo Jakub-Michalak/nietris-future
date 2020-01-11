@@ -65,7 +65,6 @@ namespace nieTRIS_future
 
         Color halfOpacityWhite = Color.White * 0.5f;
 
-        int level = 1;
         int score = 0;
         int linesCleared = 0;
         int singleCleared = 0;
@@ -105,6 +104,7 @@ namespace nieTRIS_future
 
         string theme = PlayPage.P1.GetTheme();
         string audioPack = PlayPage.P1.GetAudioPack();
+        int level = PlayPage.P1.GetStartingLevel();
 
         char?[,] board = new char?[10, 40];
 
@@ -175,7 +175,7 @@ namespace nieTRIS_future
 
             nextTetromino = BagRandomizer.GetNewBag();
 
-            level = 1;
+            level = PlayPage.P1.GetStartingLevel();
             score = 0;
             linesCleared = 0;
             singleCleared = 0;
@@ -892,7 +892,7 @@ namespace nieTRIS_future
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
-            spriteBatch.DrawString(neuro, $"PAUSE", new Vector2(1, 1), Color.White);
+            spriteBatch.DrawString(neuro, $"GAME PAUSED", new Vector2(700, 500), Color.White);
 
 
             spriteBatch.End();

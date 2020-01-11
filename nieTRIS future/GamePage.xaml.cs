@@ -41,6 +41,11 @@ namespace nieTRIS_future
 
         }
 
+        private void NavigateToMainMenu(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
+
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             _game.MiuzikuStoppo();

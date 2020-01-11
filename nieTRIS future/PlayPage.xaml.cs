@@ -68,6 +68,16 @@ namespace nieTRIS_future
             this.Frame.Navigate(typeof(GamePage));
         }
 
+        private void SetStartingLevel(object sender, RoutedEventArgs e)
+        {
+            Slider sl = sender as Slider;
+
+            if (sl != null)
+            {
+                P1.SetStartingLevel((int)sl.Value);
+            }
+        }
+
         private void SetRotationControls(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
