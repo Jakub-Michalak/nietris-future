@@ -162,7 +162,8 @@ namespace nieTRIS_future
             neuro = Content.Load<SpriteFont>("Fonts/font");
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Volume = (float)MainPage.musicVolume;
+            SoundEffect.MasterVolume = (float)MainPage.sfxVolume;
             MediaPlayer.Play(BGM);
 
         }
@@ -229,7 +230,8 @@ namespace nieTRIS_future
             neuro = Content.Load<SpriteFont>("Fonts/font");
 
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Volume = (float)MainPage.musicVolume;
+            SoundEffect.MasterVolume = (float)MainPage.sfxVolume;
             MediaPlayer.Play(BGM);
 
         }
@@ -303,9 +305,6 @@ namespace nieTRIS_future
                 CurrentBlockPositions = currentTetromino.StartingPosition();
                 nextTetromino.RemoveAt(0);
                 currentRotation = Tetromino.rotations.rotation1;
-                //UWPConsole.Console.WriteLine($"current: {currentTetromino.PieceSymbol()}");
-                //UWPConsole.Console.WriteLine($"next: {nextTetromino[0].PieceSymbol()}");
-                //UWPConsole.Console.WriteLine($"queued: {nextTetromino.Count}");
                 blockCanMoveDown = true;
                 isBlockPlaced = false;
                 blockHeld = false;

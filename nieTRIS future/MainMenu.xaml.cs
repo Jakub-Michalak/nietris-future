@@ -25,6 +25,8 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static double musicVolume = 0.1;
+        public static double sfxVolume = 1;
 
         public MainPage()
         {
@@ -69,6 +71,10 @@ namespace nieTRIS_future
             this.Frame.Navigate(typeof(CreditsPage));
         }
 
+        private void NavigateToSettings(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SettingsPage));
+        }
 
         private void Exit(object sender, RoutedEventArgs e)
         {
