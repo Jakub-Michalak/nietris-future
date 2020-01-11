@@ -9,6 +9,7 @@ namespace nieTRIS_future
 {
     class ZPiece : Tetromino
     {
+        public ZPiece() : base() { }
         public override char? PieceSymbol() { return 'z'; }
 
         public override Vector2 getCenter(List<Vector2> current)

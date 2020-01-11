@@ -9,6 +9,12 @@ namespace nieTRIS_future
 {
     class OPiece : Tetromino
     {
+        public OPiece()
+        {
+            this.x = 5;
+            this.y = 10;
+            this.position = 0;
+        }
         public override char? PieceSymbol() { return 'o'; }
         public override List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(4, -1), new Vector2(5, -1), new Vector2(4, -2), new Vector2(5, -2) }; }
         public override Vector2 getCenter(List<Vector2> current)

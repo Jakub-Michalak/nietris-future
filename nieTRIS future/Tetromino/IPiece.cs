@@ -9,6 +9,25 @@ namespace nieTRIS_future
 {
     class IPiece : Tetromino
     {
+        public IPiece()
+        {
+            this.x = 5;
+            this.y = 10;
+            this.position = 0;
+            this.kicks = new Vector2[4][][];
+            this.kicks[0] = new Vector2[4][];
+            kicks[0][1] = new Vector2[] { new Vector2(0, 0), new Vector2(-2, 0), new Vector2(1, 0), new Vector2(-2, -1), new Vector2(1, 2) };
+            kicks[0][3] = new Vector2[] { new Vector2(0, 0), new Vector2(-1, 0), new Vector2(2, 0), new Vector2(-1, 2), new Vector2(2, -1) };
+            this.kicks[1] = new Vector2[3][];
+            kicks[1][0] = new Vector2[] { new Vector2(0, 0), new Vector2(2, 0), new Vector2(-1, 0), new Vector2(2, 1), new Vector2(-1, -2) };
+            kicks[1][2] = new Vector2[] { new Vector2(0, 0), new Vector2(-1, 0), new Vector2(2, 0), new Vector2(-1, 2), new Vector2(2, -1) };
+            this.kicks[2] = new Vector2[4][];
+            kicks[2][1] = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(-2, 0), new Vector2(1, -2), new Vector2(-2, 1) };
+            kicks[2][3] = new Vector2[] { new Vector2(0, 0), new Vector2(2, 0), new Vector2(-1, 0), new Vector2(2, 1), new Vector2(-1, -2) };
+            this.kicks[3] = new Vector2[3][];
+            kicks[3][0] = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(-2, 0), new Vector2(1, -2), new Vector2(-2, 1) };
+            kicks[3][2] = new Vector2[] { new Vector2(0, 0), new Vector2(-2, 0), new Vector2(1, 0), new Vector2(-2, -1), new Vector2(1, 2) };
+        }
         public override char? PieceSymbol() { return 'i'; }
         public override List<Vector2> StartingPosition() { return new List<Vector2> { new Vector2(3, -1), new Vector2(4, -1), new Vector2(5, -1), new Vector2(6, -1) }; }
 
@@ -17,8 +36,11 @@ namespace nieTRIS_future
             return current[2];
         }
 
-        public override List<Vector2> Rotate(List<Vector2> current, rotations currentRotation, rotationDirection direction, ref char?[,] array)
+        public override List<Vector2> TryRotate(List<Vector2> current, rotations currentRotation, rotationDirection direction)
         {
+            if(direction == rotationDirection.clockwise) this.position = (this.position + 1) % 4;
+            else this.position = (this.position + 3) % 4;
+
             int maxX = 0;
             int minX = 10;
             float centerX;
