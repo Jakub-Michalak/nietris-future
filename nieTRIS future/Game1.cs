@@ -114,6 +114,17 @@ namespace nieTRIS_future
         int level = PlayPage.P1.GetStartingLevel();
 
         char?[,] board = new char?[10, 40];
+        private bool DASheld;
+        private bool DASclicked;
+        private bool DASheldLeft;
+        private double DAStimerLeft;
+        private double DAStimerRight;
+        private bool DASheldRight;
+        private bool DASclickedRight;
+        private double DAStimerDown;
+        private bool DASheldDown;
+
+        public bool DASclickedLeft { get; private set; }
 
         public Game1()
         {
@@ -200,6 +211,8 @@ namespace nieTRIS_future
             currentTetromino = nextTetromino[0];
             nextTetromino.RemoveAt(0);
             CurrentBlockPositions = currentTetromino.StartingPosition();
+
+            DASFirstPress = true;
 
 
         }
@@ -353,32 +366,84 @@ namespace nieTRIS_future
                 isBlockPlaced = true;
             }
 
-            if (currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left))
-            {
 
+
+            if(currentGamepadState.IsButtonDown(Buttons.DPadLeft))
+            {
+                DAStimerLeft += gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+            if(DAStimerLeft > DAS)
+            {
+                DASheldLeft = true;
+            }
+            if(currentGamepadState.IsButtonUp(Buttons.DPadLeft))
+            {
+                if(DASheldLeft)
+                {
+                    DAStimerLeft = 0;
+                    DASheldLeft = false;
+                }
+                else if (lastGamepadState.IsButtonDown(Buttons.DPadLeft))
+                {
+                    DASclickedLeft = true;
+                }
+            }
+            if (DASclickedLeft)
+            {
+                Move(Directions.Left);
+                DASclickedLeft = false;
+            }
+            else if (DASheldLeft)
+            {
                 if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
                 {
                     Move(Directions.Left);
                     ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
                 }
 
-                
             }
 
-            if (currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right))
+
+            if (currentGamepadState.IsButtonDown(Buttons.DPadRight))
             {
-                
+                DAStimerRight += gameTime.ElapsedGameTime.TotalMilliseconds;
+            }
+            if (DAStimerRight > DAS)
+            {
+                DASheldRight = true;
+            }
+            if (currentGamepadState.IsButtonUp(Buttons.DPadRight))
+            {
+                if (DASheldRight)
+                {
+                    DAStimerRight = 0;
+                    DASheldRight = false;
+                }
+                else if (lastGamepadState.IsButtonDown(Buttons.DPadRight))
+                {
+                    DASclickedRight = true;
+                }
+            }
+            if (DASclickedRight)
+            {
+                Move(Directions.Right);
+                DASclickedRight = false;
+            }
+            else if (DASheldRight)
+            {
                 if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
                 {
                     Move(Directions.Right);
                     ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
                 }
-                
+
             }
+
+
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down))
             {
-                if (20 * timer >= Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))
+                if ( timer >= (Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))/10)
                 {
                     Move(Directions.Down);
 
