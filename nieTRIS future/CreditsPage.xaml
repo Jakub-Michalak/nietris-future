@@ -69,16 +69,17 @@
                 <TextBlock Grid.Row="17"  HorizontalAlignment="Center" FontSize="16">iCurbix</TextBlock>
                 <TextBlock Grid.Row="18"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="19"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="20"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="21"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="22">PARTNER STRATEGICZNY</TextBlock>
-                <Image Grid.Row="22" Margin="500,0" Source="Assets/motomoto.png"/>
+                <TextBlock Grid.Row="20"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="20">QA TEST LEADER</TextBlock>
+                <TextBlock Grid.Row="21"  HorizontalAlignment="Center" FontSize="16">by</TextBlock>
+                <TextBlock Grid.Row="22"  HorizontalAlignment="Center" FontSize="16">JaneQ</TextBlock>
                 <TextBlock Grid.Row="23"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="24"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="25"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="26"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="27"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="28"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="29"  HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="28"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="22">PARTNER STRATEGICZNY</TextBlock>
+                <Image Grid.Row="29" Margin="500,0" Source="Assets/motomoto.png"/>
+
                 <TextBlock Grid.Row="30"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="31"  HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="32"  HorizontalAlignment="Center"></TextBlock>

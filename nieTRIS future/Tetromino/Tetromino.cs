@@ -57,10 +57,10 @@ namespace nieTRIS_future
             foreach (Vector2 v in maybecurrent)
             {
                 if (v.X < 0 || v.X > 9) return false;
-                if (v.Y > 39) return false;
+                if (v.Y +20 > 39) return false;
                 try
                 {
-                    if (array[(int)v.X, (int)v.Y] != null) return false;
+                    if (array[(int)v.X, (int)v.Y+20] != null) return false;
                 }
                 catch (IndexOutOfRangeException e)
                 {

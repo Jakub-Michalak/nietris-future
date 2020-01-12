@@ -35,9 +35,12 @@ namespace nieTRIS_future
             switch (position)
             {
                 case 1:
-                    selectedMode = "Marathon";
+                    selectedMode = "Endless";
                     break;
                 case 2:
+                    selectedMode = "Marathon";
+                    break;
+                case 3:
                     selectedMode = "Sprint";
                     break;
             }
