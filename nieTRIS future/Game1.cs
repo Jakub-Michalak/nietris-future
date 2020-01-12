@@ -85,7 +85,6 @@ namespace nieTRIS_future
         bool blockHeld = false;
         bool blockCanMoveDown = true;
 
-        bool DASFirstPress;
 
 
         static List<Vector2> CurrentBlockPositions;
@@ -114,15 +113,13 @@ namespace nieTRIS_future
         int level = PlayPage.P1.GetStartingLevel();
 
         char?[,] board = new char?[10, 40];
-        private bool DASheld;
-        private bool DASclicked;
+
         private bool DASheldLeft;
         private double DAStimerLeft;
         private double DAStimerRight;
         private bool DASheldRight;
         private bool DASclickedRight;
-        private double DAStimerDown;
-        private bool DASheldDown;
+        private bool DASfirstLeft;
 
         public bool DASclickedLeft { get; private set; }
 
@@ -212,7 +209,6 @@ namespace nieTRIS_future
             nextTetromino.RemoveAt(0);
             CurrentBlockPositions = currentTetromino.StartingPosition();
 
-            DASFirstPress = true;
 
 
         }
@@ -368,35 +364,40 @@ namespace nieTRIS_future
 
 
 
-            if(currentGamepadState.IsButtonDown(Buttons.DPadLeft))
+            if(currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left))
             {
+
                 DAStimerLeft += gameTime.ElapsedGameTime.TotalMilliseconds;
             }
             if(DAStimerLeft > DAS)
             {
                 DASheldLeft = true;
             }
-            if(currentGamepadState.IsButtonUp(Buttons.DPadLeft))
+            if(currentGamepadState.IsButtonUp(Buttons.DPadLeft) && currentKeyboardState.IsKeyUp(Keys.Left))
             {
                 if(DASheldLeft)
                 {
                     DAStimerLeft = 0;
                     DASheldLeft = false;
                 }
-                else if (lastGamepadState.IsButtonDown(Buttons.DPadLeft))
+                else if (lastGamepadState.IsButtonDown(Buttons.DPadLeft) || lastKeyboardState.IsKeyDown(Keys.Left))
                 {
                     DASclickedLeft = true;
                 }
             }
             if (DASclickedLeft)
             {
+                lockTimer = 0;
                 Move(Directions.Left);
                 DASclickedLeft = false;
             }
+
             else if (DASheldLeft)
             {
+
                 if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
                 {
+                    lockTimer = 0;
                     Move(Directions.Left);
                     ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
                 }
@@ -404,60 +405,55 @@ namespace nieTRIS_future
             }
 
 
-            if (currentGamepadState.IsButtonDown(Buttons.DPadRight))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right))
             {
+
                 DAStimerRight += gameTime.ElapsedGameTime.TotalMilliseconds;
             }
             if (DAStimerRight > DAS)
             {
                 DASheldRight = true;
             }
-            if (currentGamepadState.IsButtonUp(Buttons.DPadRight))
+            if (currentGamepadState.IsButtonUp(Buttons.DPadRight) && currentKeyboardState.IsKeyUp(Keys.Right))
             {
                 if (DASheldRight)
                 {
                     DAStimerRight = 0;
                     DASheldRight = false;
                 }
-                else if (lastGamepadState.IsButtonDown(Buttons.DPadRight))
+                else if (lastGamepadState.IsButtonDown(Buttons.DPadRight) || lastKeyboardState.IsKeyDown(Keys.Right))
                 {
                     DASclickedRight = true;
                 }
             }
             if (DASclickedRight)
             {
+                lockTimer = 0;
                 Move(Directions.Right);
                 DASclickedRight = false;
             }
+
             else if (DASheldRight)
             {
                 if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
                 {
+                    lockTimer = 0;
                     Move(Directions.Right);
                     ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
                 }
 
             }
 
-
-
             if (currentGamepadState.IsButtonDown(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down))
             {
-                if ( timer >= (Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))/10)
+                if ( timer >= (Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))/5)
                 {
+                    lockTimer = 0;
                     Move(Directions.Down);
 
                 }
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Space))
-            {
-                foreach (Vector2 v in CurrentBlockPositions)
-                {
-                    board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
-                }
-                isBlockPlaced = true;
-            }
 
             DeleteLines();
 
@@ -480,6 +476,7 @@ namespace nieTRIS_future
 
             if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
+                lockTimer = 0;
                 RotateSFX.CreateInstance().Play();
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.clockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation2;
@@ -491,6 +488,7 @@ namespace nieTRIS_future
 
             if (currentGamepadState.IsButtonDown(Buttons.A) && lastGamepadState.IsButtonUp(Buttons.A) || currentKeyboardState.IsKeyDown(Keys.Z) && lastKeyboardState.IsKeyUp(Keys.Z))
             {
+                lockTimer = 0;
                 RotateSFX.CreateInstance().Play();
                 CurrentBlockPositions = currentTetromino.Rotate(CurrentBlockPositions, currentRotation, Tetromino.rotationDirection.counterclockwise, ref board);
                 if (currentRotation == Tetromino.rotations.rotation1) currentRotation = Tetromino.rotations.rotation4;
