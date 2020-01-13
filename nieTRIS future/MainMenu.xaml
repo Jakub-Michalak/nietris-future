@@ -33,23 +33,23 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="1" Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Height="260" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="48" AllowFocusOnInteraction="False" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="1" Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Height="220" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="48" AllowFocusOnInteraction="False" UseSystemFocusVisuals="False">
                 
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="2" Grid.Column="0" x:Name="STATS" Content="STATS" HorizontalAlignment="Stretch" Height="260"  Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="2" Grid.Column="0" x:Name="STATS" Content="STATS" HorizontalAlignment="Stretch" Height="220"  Click="NavigateToStatsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
                
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="3" Grid.Column="0" x:Name="CREDITS" Content="CREDITS" HorizontalAlignment="Stretch" Height="260"  Click="NavigateToCreditsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="3" Grid.Column="0" x:Name="CREDITS" Content="CREDITS" HorizontalAlignment="Stretch" Height="220"  Click="NavigateToCreditsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
                
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="4" Grid.Column="0" x:Name="SETTINGS" Content="SETTINGS" HorizontalAlignment="Stretch" Height="260" Click="NavigateToSettingsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="4" Grid.Column="0" x:Name="SETTINGS" Content="SETTINGS" HorizontalAlignment="Stretch" Height="220" Click="NavigateToSettingsPage" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
                 
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="5" Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Height="260" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="5" Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Height="220" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="48" UseSystemFocusVisuals="False">
 
             </Button>
         </Grid>
