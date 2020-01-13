@@ -573,6 +573,13 @@ namespace nieTRIS_future
 
         }
 
+        protected void SubmitStats()
+        {
+            //if(gameMode="endless")PlayPage.P1.endlessSubmitScore(score);
+            PlayPage.P1.addLineClears(linesCleared);
+            PlayPage.P1.addTetrisClears(tetrisCleared);
+        }
+
         public int MaxPositionX(List<Vector2> list)
         {
             int max = 0;
@@ -735,6 +742,7 @@ namespace nieTRIS_future
                     PauseDraw();
                     break;
                 case GameStates.End:
+                    SubmitStats();
                     EndedDraw();
                     break;
                 default:
