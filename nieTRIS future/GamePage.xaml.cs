@@ -53,6 +53,7 @@ namespace nieTRIS_future
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            bool result = Windows.UI.ViewManagement.ApplicationViewScaling.TrySetDisableLayoutScaling(true);
             Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
             _game.Reset();
             _game.Load();

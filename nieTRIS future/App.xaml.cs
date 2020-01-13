@@ -39,11 +39,14 @@ namespace nieTRIS_future
             //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
             if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Application", "RequiresPointerMode"))
         {
-            //If running on the Xbox, disable the default on screen pointer
-            if (IsXbox())
-            {
-                Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
-            }
+                //If running on the Xbox, disable the default on screen pointer
+                if (IsXbox())
+                {
+                    Application.Current.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+                    bool result = Windows.UI.ViewManagement.ApplicationViewScaling.TrySetDisableLayoutScaling(true);
+
+
+                }
         }
     }
 
@@ -69,7 +72,7 @@ namespace nieTRIS_future
             // By default we want to fill the entire core window.
 
             Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (object sender, Windows.UI.Core.BackRequestedEventArgs args) => { args.Handled = true; };
-            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
+            ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
 
 #if DEBUG
             //if (System.Diagnostics.Debugger.IsAttached)

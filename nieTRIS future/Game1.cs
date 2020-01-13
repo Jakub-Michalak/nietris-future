@@ -133,6 +133,14 @@ namespace nieTRIS_future
         {
             TargetElapsedTime = TimeSpan.FromSeconds(1.0 / 144.0f);
 
+            if (App.IsXbox())
+            {
+                graphics.HardwareModeSwitch = true;
+                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                graphics.ApplyChanges();
+            }
+
             Reset();
 
             base.Initialize();
@@ -598,7 +606,11 @@ namespace nieTRIS_future
         {
             foreach (Vector2 v in CurrentBlockPositions)
             {
-                if ((int)v.Y < 0) { currentGameState = GameStates.End; SubmitStats(); break; }
+                if ((int)v.Y < 0)
+                {
+                    currentGameState = GameStates.End; SubmitStats(); 
+                    break;
+                }
                 else board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
             }
         }

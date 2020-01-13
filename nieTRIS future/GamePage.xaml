@@ -8,21 +8,14 @@
     mc:Ignorable="d"
    >
 
-
-        <!--
-        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="-116,2,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80" Focusable="False">
-            <Button.KeyboardAccelerators>
-                <KeyboardAccelerator Key="Escape"/>
-            </Button.KeyboardAccelerators>
-        </Button>
-        -->
     <Grid x:Name="grid" KeyDown="Grid_KeyDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <UserControl x:Name="userControl" IsTabStop="True" IsHitTestVisible="False" KeyDown="Grid_KeyDown"/>
         <SwapChainPanel Grid.Column="0" x:Name="swapChainPanel"  />
+
     </Grid>
 
-  
+
 </Page>
