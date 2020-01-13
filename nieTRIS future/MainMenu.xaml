@@ -25,12 +25,13 @@
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="0.5*" />
             </Grid.RowDefinitions>
             <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="1" Grid.Column="0" x:Name="PLAY" Content="PLAY" HorizontalAlignment="Stretch" Height="130" Click="NavigateToPlayPage" Foreground="White" FontWeight="Bold" FontSize="24" AllowFocusOnInteraction="False" UseSystemFocusVisuals="False">
                 
@@ -44,11 +45,14 @@
                
             </Button>
 
-            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="4" Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Height="130" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="24" UseSystemFocusVisuals="False">
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="4" Grid.Column="0" x:Name="SETTINGS" Content="SETTINGS" HorizontalAlignment="Stretch" Height="130" Click="NavigateToSettingsPage" Foreground="White" FontWeight="Bold" FontSize="24" UseSystemFocusVisuals="False">
                 
             </Button>
+
+            <Button GotFocus="ButtonGotFocus" LostFocus="ButtonLostFocus" Grid.Row="5" Grid.Column="0" x:Name="EXIT" Content="EXIT" HorizontalAlignment="Stretch" Height="130" Click="Exit" Foreground="White" FontWeight="Bold" FontSize="24" UseSystemFocusVisuals="False">
+
+            </Button>
         </Grid>
-        <Button Grid.Column="1" Click="NavigateToSettings" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
         <Image Grid.Column="1" Margin="80,40,80,40" Source="Assets/nieTris logo.png"/>
     </Grid>
 </Page>

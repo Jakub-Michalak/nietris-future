@@ -13,10 +13,11 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        static Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+
         public SettingsPage()
         {
             this.InitializeComponent();
-
         }
 
         private void NavigateToMainMenu(object sender, RoutedEventArgs e)
@@ -31,6 +32,7 @@ namespace nieTRIS_future
                 if (sl != null)
                 {
                     MainPage.musicVolume = sl.Value;
+                    roamingSettings.Values["musicVolume"] = MainPage.musicVolume;
                 }
         }
 
@@ -41,6 +43,7 @@ namespace nieTRIS_future
             if (sl != null)
             {
                 MainPage.sfxVolume  = sl.Value;
+                roamingSettings.Values["sfxVolume"] = MainPage.sfxVolume;
             }
         }
 

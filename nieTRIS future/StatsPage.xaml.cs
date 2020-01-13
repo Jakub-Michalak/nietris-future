@@ -27,14 +27,33 @@ namespace nieTRIS_future
     public sealed partial class StatsPage : Page
     {
         static Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
-        string textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
-        string textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
-        string textEndlessScore = MainPage.P1.getEndlessScore().ToString();
-        string textUltraScore = MainPage.P1.getUltraScore().ToString();
-        string textSprintTime = MainPage.P1.getSprintTime().ToString();
+
+        string textLinesCleared;
+        string textTetrisCleared;
+        string textEndlessScore;
+        string textUltraScore;
+        string textSprintTime;
 
         public StatsPage()
         {
+            if (roamingSettings.Values.ContainsKey("linesCleared"))
+            {
+                textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
+                textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
+                textEndlessScore = MainPage.P1.getEndlessScore().ToString();
+                textUltraScore = MainPage.P1.getUltraScore().ToString();
+                textSprintTime = MainPage.P1.getSprintTime().ToString();
+            }
+            else
+            {
+                roamingSettings.Values.Add("linesCleared", 0);
+                roamingSettings.Values.Add("tetrisCleared", 0);
+                textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
+                textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
+                textEndlessScore = MainPage.P1.getEndlessScore().ToString();
+                textUltraScore = MainPage.P1.getUltraScore().ToString();
+                textSprintTime = MainPage.P1.getSprintTime().ToString();
+            }
             this.InitializeComponent();
         }
 

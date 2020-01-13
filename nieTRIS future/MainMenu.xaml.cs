@@ -25,18 +25,31 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public static double musicVolume = 0.1;
-        public static double sfxVolume = 1;
-        public static Player P1 = new Player();
+        static Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
 
+        public static Player P1 = new Player();
+        public static double musicVolume;
+        public static double sfxVolume;
         public MainPage()
         {
             this.InitializeComponent();
-            
-            ApplicationView.PreferredLaunchViewSize = new Size(1280, 720);
+
+            if (roamingSettings.Values.ContainsKey("musicVolume"))
+            {
+                musicVolume = (double)roamingSettings.Values["musicVolume"];
+                sfxVolume = (double)roamingSettings.Values["sfxVolume"];
+            }
+            else
+            {
+                roamingSettings.Values.Add("musicVolume", 0.1);
+                roamingSettings.Values.Add("sfxVolume", 1);
+                musicVolume = (double)roamingSettings.Values["musicVolume"];
+                sfxVolume = (double)roamingSettings.Values["sfxVolume"];
+            }
+
+            ApplicationView.PreferredLaunchViewSize = new Size(1920, 1080);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             Windows.UI.Xaml.Window.Current.CoreWindow.PointerCursor = new Windows.UI.Core.CoreCursor(Windows.UI.Core.CoreCursorType.Arrow, 0);
-
 
         }
 
