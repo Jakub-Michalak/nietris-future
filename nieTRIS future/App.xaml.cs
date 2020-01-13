@@ -36,8 +36,8 @@ namespace nieTRIS_future
         this.InitializeComponent();
         this.Suspending += OnSuspending;
 
-        //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
-        if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Application", "RequiresPointerMode"))
+            //API check to ensure the "RequiresPointerMode" property exists, ensuring project is running on build 14393 or later
+            if (Windows.Foundation.Metadata.ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Application", "RequiresPointerMode"))
         {
             //If running on the Xbox, disable the default on screen pointer
             if (IsXbox())
@@ -66,8 +66,10 @@ namespace nieTRIS_future
     /// <param name="e">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs e)
     {
-        // By default we want to fill the entire core window.
-        ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+            // By default we want to fill the entire core window.
+
+            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += (object sender, Windows.UI.Core.BackRequestedEventArgs args) => { args.Handled = true; };
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
 
 #if DEBUG
             //if (System.Diagnostics.Debugger.IsAttached)
@@ -76,7 +78,7 @@ namespace nieTRIS_future
             //}
 #endif
 
-        Frame rootFrame = Window.Current.Content as Frame;
+            Frame rootFrame = Window.Current.Content as Frame;
 
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
@@ -130,5 +132,7 @@ namespace nieTRIS_future
         //TODO: Save application state and stop any background activity
         deferral.Complete();
     }
+
+
 }
 }

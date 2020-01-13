@@ -53,7 +53,7 @@ namespace nieTRIS_future
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
             _game.Reset();
             _game.Load();
             _game.currentGameState = Game1.GameStates.Game;
