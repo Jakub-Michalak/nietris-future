@@ -118,10 +118,8 @@ namespace nieTRIS_future
         private double DAStimerLeft;
         private double DAStimerRight;
         private bool DASheldRight;
-        private bool DASclickedRight;
-        private bool DASfirstLeft;
-
-        public bool DASclickedLeft { get; private set; }
+        private bool DASclickedRight = true;
+        private bool DASclickedLeft = true;
 
         public Game1()
         {
@@ -362,10 +360,16 @@ namespace nieTRIS_future
                 isBlockPlaced = true;
             }
 
+            // AKTUALNIE NIE DZIAŁA
 
-
-            if(currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left))
+            if (currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left))
             {
+                if (DASclickedLeft)
+                {
+                    lockTimer = 0;
+                    Move(Directions.Left);
+                    DASclickedLeft = false;
+                }
 
                 DAStimerLeft += gameTime.ElapsedGameTime.TotalMilliseconds;
             }
@@ -385,12 +389,7 @@ namespace nieTRIS_future
                     DASclickedLeft = true;
                 }
             }
-            if (DASclickedLeft)
-            {
-                lockTimer = 0;
-                Move(Directions.Left);
-                DASclickedLeft = false;
-            }
+
 
             else if (DASheldLeft)
             {
@@ -403,11 +402,16 @@ namespace nieTRIS_future
                 }
 
             }
-
+            // AKTUALNIE NIE DZIAŁA
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right))
             {
-
+                if (DASclickedRight)
+                {
+                    lockTimer = 0;
+                    Move(Directions.Right);
+                    DASclickedRight = false;
+                }
                 DAStimerRight += gameTime.ElapsedGameTime.TotalMilliseconds;
             }
             if (DAStimerRight > DAS)
@@ -426,12 +430,7 @@ namespace nieTRIS_future
                     DASclickedRight = true;
                 }
             }
-            if (DASclickedRight)
-            {
-                lockTimer = 0;
-                Move(Directions.Right);
-                DASclickedRight = false;
-            }
+
 
             else if (DASheldRight)
             {
