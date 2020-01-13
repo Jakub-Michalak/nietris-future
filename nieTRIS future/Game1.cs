@@ -115,10 +115,10 @@ namespace nieTRIS_future
 
         char?[,] board = new char?[10, 40];
 
-        private bool DASheldLeft;
+
         private double DAStimerLeft;
         private double DAStimerRight;
-        private bool DASheldRight;
+
         private bool DASclickedRight = true;
         private bool DASclickedLeft = true;
 
@@ -361,88 +361,68 @@ namespace nieTRIS_future
                 isBlockPlaced = true;
             }
 
-            // AKTUALNIE NIE DZIAŁA
+            // Przesówanie bloku w lewo
+            if (DASclickedLeft && !(currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left)))
+            {
+                Debug.WriteLine("czyszczenie DASclickedLeft");
+                DASclickedLeft = false;
+
+            }
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                if (DASclickedLeft)
+                if (DASclickedLeft == false)
                 {
-                    lockTimer = 0;
-                    Move(Directions.Left);
-                    DASclickedLeft = false;
-                }
+                    Debug.WriteLine("pierwszy klik");
+                    DAStimerLeft = gameTime.TotalGameTime.TotalMilliseconds;
 
-                DAStimerLeft += gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
-            if(DAStimerLeft > DAS)
-            {
-                DASheldLeft = true;
-            }
-            if(currentGamepadState.IsButtonUp(Buttons.DPadLeft) && currentKeyboardState.IsKeyUp(Keys.Left))
-            {
-                if(DASheldLeft)
-                {
-                    DAStimerLeft = 0;
-                    DASheldLeft = false;
-                }
-                else if (lastGamepadState.IsButtonDown(Buttons.DPadLeft) || lastKeyboardState.IsKeyDown(Keys.Left))
-                {
+                    Move(Directions.Left);
                     DASclickedLeft = true;
                 }
-            }
-
-
-            else if (DASheldLeft)
-            {
-
-                if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
+                if ( gameTime.TotalGameTime.TotalMilliseconds > DAStimerLeft + DAS)
                 {
-                    lockTimer = 0;
-                    Move(Directions.Left);
-                    ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
+                    if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
+                    {
+                        Debug.WriteLine("przesowanie ARR");
+                        lockTimer = 0;
+                        Move(Directions.Left);
+                        ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
+                    }
                 }
+            }
+
+            // Przesówanie bloku w prawo
+            if (DASclickedRight && !(currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right)))
+            {
+                Debug.WriteLine("czyszczenie DASclickedRight");
+                DASclickedRight = false;
 
             }
-            // AKTUALNIE NIE DZIAŁA
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                if (DASclickedRight)
+                if (DASclickedRight == false)
                 {
-                    lockTimer = 0;
+                    Debug.WriteLine("pierwszy klik");
+                    DAStimerRight = gameTime.TotalGameTime.TotalMilliseconds;
+
                     Move(Directions.Right);
-                    DASclickedRight = false;
-                }
-                DAStimerRight += gameTime.ElapsedGameTime.TotalMilliseconds;
-            }
-            if (DAStimerRight > DAS)
-            {
-                DASheldRight = true;
-            }
-            if (currentGamepadState.IsButtonUp(Buttons.DPadRight) && currentKeyboardState.IsKeyUp(Keys.Right))
-            {
-                if (DASheldRight)
-                {
-                    DAStimerRight = 0;
-                    DASheldRight = false;
-                }
-                else if (lastGamepadState.IsButtonDown(Buttons.DPadRight) || lastKeyboardState.IsKeyDown(Keys.Right))
-                {
                     DASclickedRight = true;
                 }
-            }
-
-
-            else if (DASheldRight)
-            {
-                if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
+                if (gameTime.TotalGameTime.TotalMilliseconds > DAStimerRight + DAS)
                 {
-                    lockTimer = 0;
-                    Move(Directions.Right);
-                    ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
+                    if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
+                    {
+                        Debug.WriteLine("przesowanie ARR");
+                        lockTimer = 0;
+                        Move(Directions.Right);
+                        ARRtimer = gameTime.TotalGameTime.TotalMilliseconds;
+                    }
                 }
-
             }
+
+
+
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down))
             {

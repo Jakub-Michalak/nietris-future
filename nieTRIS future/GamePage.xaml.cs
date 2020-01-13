@@ -63,10 +63,8 @@ namespace nieTRIS_future
 
         private void Grid_KeyDown(object sender, KeyRoutedEventArgs e)
         {
-            Debug.WriteLine("cos wcisniete");
             if (e.Key == Windows.System.VirtualKey.GamepadView || e.Key == Windows.System.VirtualKey.Q)
             {
-                Debug.WriteLine("dziala");
                 _game.currentGameState = Game1.GameStates.End;
                 Frame.Navigate(typeof(MainPage));
             }
