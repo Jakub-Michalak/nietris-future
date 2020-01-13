@@ -434,9 +434,10 @@ namespace nieTRIS_future
 
             if (currentGamepadState.IsButtonDown(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down))
             {
-                if ( timer >= (Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))/5)
+                if (timer >= Math.Pow((0.8 - ((level - 1) * 0.007)), level - 1) / 20)
                 {
                     lockTimer = 0;
+                    timer = 0;
                     Move(Directions.Down);
 
                 }

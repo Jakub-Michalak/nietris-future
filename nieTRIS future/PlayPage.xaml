@@ -9,51 +9,51 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid KeyUp="Grid_KeyDown" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Bottom">
-        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
-        <FlipView x:Name="ModeSelector" SelectionChanged="ModeSelector_SelectionChanged" HorizontalAlignment="Center" Margin="0,90,0,90">
+        <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="160" Width="160"/>
+        <FlipView x:Name="ModeSelector" SelectionChanged="ModeSelector_SelectionChanged" HorizontalAlignment="Center" Margin="0,220,0,220">
             <FlipView.Items>
                 <Grid x:Name="Endless">
-                    <Image Source="Assets\FlipCovers\Endless.png" Stretch="Uniform" VerticalAlignment="Top"/>
-                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom">
-                        <TextBlock Text="Endless" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" VerticalAlignment="Center"/>
+                    <Image Source="Assets\FlipCovers\Endless.png" Margin="0,0,0,50" Stretch="Uniform" VerticalAlignment="Top"/>
+                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom" Height="100">
+                        <TextBlock Text="Endless" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="72" VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
                 <Grid x:Name="Marathon">
-                    <Image Source="Assets\FlipCovers\Marathon.png" Stretch="Uniform" VerticalAlignment="Top"/>
-                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom">
-                        <TextBlock Text="Marathon" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" VerticalAlignment="Center"/>
+                    <Image Source="Assets\FlipCovers\Marathon.png" Margin="0,0,0,50" Stretch="Uniform" VerticalAlignment="Top"/>
+                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom" Height="100">
+                        <TextBlock Text="Marathon" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="72" VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
                 <Grid x:Name="Sprint">
-                    <Image Source="Assets\FlipCovers\Sprint.png" Stretch="Uniform" VerticalAlignment="Top"/>
-                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom">
-                        <TextBlock Text="Sprint" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="36" VerticalAlignment="Center"/>
+                    <Image Source="Assets\FlipCovers\Sprint.png" Margin="0,0,0,50" Stretch="Uniform" VerticalAlignment="Top"/>
+                    <Border Background="#A5FFFFFF" VerticalAlignment="Bottom" Height="100">
+                        <TextBlock Text="Sprint" Foreground="#CC000000" Padding="12,12" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="72" VerticalAlignment="Center"/>
                     </Border>
                 </Grid>
             </FlipView.Items>
         </FlipView>
-        <Button x:Name="PlayButton" Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="20,0,260,22" VerticalAlignment="Bottom" Width="200" FontSize="24" FontWeight="Bold" Loaded="setFocusToPlayButton"/>
-        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="260,0,0,22" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold" Width="200" Click="customizationMenuFocused">
+        <Button x:Name="PlayButton" Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="0,0,520,66" VerticalAlignment="Bottom" Width="400" FontSize="56" FontWeight="Bold" Loaded="setFocusToPlayButton"/>
+        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="520,0,0,66" VerticalAlignment="Bottom" FontSize="56" FontWeight="Bold" Width="400" Click="customizationMenuFocused">
             <Button.Flyout>
                 <Flyout>
-                    <StackPanel>
-                        <Slider ValueChanged="SetStartingLevel" Header="Starting level" StepFrequency="1" Minimum="0" Maximum="10" TickFrequency="1" TickPlacement="Outside" />
-                        <ComboBox SelectionChanged="SetTheme"  Header="Theme" PlaceholderText="Neon" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="0,0,0,5">
+                    <StackPanel Width="360">
+                        <Slider ValueChanged="SetStartingLevel" Header="Starting level" SmallChange="1" LargeChange="1" StepFrequency="1" Minimum="0" Maximum="10" FontSize="18" TickFrequency="1" TickPlacement="Outside" />
+                        <ComboBox SelectionChanged="SetTheme"  Header="Theme" PlaceholderText="Neon" Width="360" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="0,0,0,5">
                             <x:String>Neon</x:String>
                             <x:String>Eggplant</x:String>
                             <x:String>Retro</x:String>
                             <x:String>Miku</x:String>
                         </ComboBox>
-                        <ComboBox SelectionChanged="SetAudioPack"  Header="Audio pack" PlaceholderText="Default" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontFamily="Segoe UI" Margin="0,0,0,5">
+                        <ComboBox SelectionChanged="SetAudioPack"  Header="Audio pack" PlaceholderText="Default" Width="360" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,5">
                             <x:String>Default</x:String>
                             <x:String>Quake</x:String>
                             <x:String>Woop</x:String>
                             <x:String>Waterdrops</x:String>
                             <x:String>Miku</x:String>
                         </ComboBox>
-                        <TextBlock Text="Rotation controls:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" FontWeight="Normal" FontFamily="Segoe UI"/>
+                    <!--<TextBlock Text="Rotation controls:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Normal" FontFamily="Segoe UI"/>
                         <RadioButton x:Name="Rotation_Default" GroupName="RotationControls" Content="Default" Tag="Default" Checked="SetRotationControls" IsChecked="true" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                        <RadioButton x:Name="Rotation_Inverted" GroupName="RotationControls" Content="Inverted" Tag="Inverted" Checked="SetRotationControls" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI"/>
+                        <RadioButton x:Name="Rotation_Inverted" GroupName="RotationControls" Content="Inverted" Tag="Inverted" Checked="SetRotationControls" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Segoe UI"/> -->
                     </StackPanel>
                 </Flyout>
             </Button.Flyout>
