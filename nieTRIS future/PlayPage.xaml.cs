@@ -16,15 +16,15 @@ namespace nieTRIS_future
     {
         bool customizationFocused = false;
         string selectedMode;
-        public static Player P1 = new Player();
+        
 
         public PlayPage()
         {
             this.InitializeComponent();
 
-            P1.SetTheme("Neon");
-            P1.SetAudioPack("Default");
-            P1.SetRotationControls("Default");
+            MainPage.P1.SetTheme("Neon");
+            MainPage.P1.SetAudioPack("Default");
+            MainPage.P1.SetRotationControls("Default");
         }
 
         private void ModeSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -77,7 +77,7 @@ namespace nieTRIS_future
 
             if (sl != null)
             {
-                P1.SetStartingLevel((int)sl.Value);
+                MainPage.P1.SetStartingLevel((int)sl.Value);
             }
         }
 
@@ -91,10 +91,10 @@ namespace nieTRIS_future
                 switch (controlsName)
                 {
                     case "Default":
-                        P1.SetRotationControls("Default");
+                        MainPage.P1.SetRotationControls("Default");
                         break;
                     case "Inverted":
-                        P1.SetRotationControls("Inverted");
+                        MainPage.P1.SetRotationControls("Inverted");
                         break;
                 }
             }
@@ -110,16 +110,16 @@ namespace nieTRIS_future
                 switch (controlsName)
                 {
                     case "Neon":
-                        P1.SetTheme("Neon");
+                        MainPage.P1.SetTheme("Neon");
                         break;
                     case "Eggplant":
-                        P1.SetTheme("Eggplant");
+                        MainPage.P1.SetTheme("Eggplant");
                         break;
                     case "Retro":
-                        P1.SetTheme("Retro");
+                        MainPage.P1.SetTheme("Retro");
                         break;
                     case "Miku":
-                        P1.SetTheme("Miku");
+                        MainPage.P1.SetTheme("Miku");
                         break;
                 }
             }
@@ -135,19 +135,19 @@ namespace nieTRIS_future
                 switch (controlsName)
                 {
                     case "Default":
-                        P1.SetAudioPack("Default");
+                        MainPage.P1.SetAudioPack("Default");
                         break;
                     case "Quake":
-                        P1.SetAudioPack("Quake");
+                        MainPage.P1.SetAudioPack("Quake");
                         break;
                     case "Woop":
-                        P1.SetAudioPack("Woop");
+                        MainPage.P1.SetAudioPack("Woop");
                         break;
                     case "Waterdrops":
-                        P1.SetAudioPack("Waterdrops");
+                        MainPage.P1.SetAudioPack("Waterdrops");
                         break;
                     case "Miku":
-                        P1.SetAudioPack("Miku");
+                        MainPage.P1.SetAudioPack("Miku");
                         break;
                 }
             }

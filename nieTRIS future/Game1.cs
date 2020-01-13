@@ -13,12 +13,13 @@ using Windows.Foundation;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Controls;
+using Windows.Storage;
 
 namespace nieTRIS_future
 {
     public class Game1 : Game
     {
-
+        Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
         double ARR = 50;
         double DAS = 300;
 
@@ -108,9 +109,9 @@ namespace nieTRIS_future
 
         public GameStates currentGameState = GameStates.Game;
 
-        string theme = PlayPage.P1.GetTheme();
-        string audioPack = PlayPage.P1.GetAudioPack();
-        int level = PlayPage.P1.GetStartingLevel();
+        string theme = MainPage.P1.GetTheme();
+        string audioPack = MainPage.P1.GetAudioPack();
+        int level = MainPage.P1.GetStartingLevel();
 
         char?[,] board = new char?[10, 40];
 
@@ -139,8 +140,8 @@ namespace nieTRIS_future
 
         public void Load()
         {
-            theme = PlayPage.P1.GetTheme();
-            audioPack = PlayPage.P1.GetAudioPack();
+            theme = MainPage.P1.GetTheme();
+            audioPack = MainPage.P1.GetAudioPack();
 
 
 
@@ -189,7 +190,7 @@ namespace nieTRIS_future
 
             nextTetromino = BagRandomizer.GetNewBag();
 
-            level = PlayPage.P1.GetStartingLevel();
+            level = MainPage.P1.GetStartingLevel();
             score = 0;
             linesCleared = 0;
             singleCleared = 0;
@@ -575,9 +576,12 @@ namespace nieTRIS_future
 
         protected void SubmitStats()
         {
-            //if(gameMode="endless")PlayPage.P1.endlessSubmitScore(score);
-            PlayPage.P1.addLineClears(linesCleared);
-            PlayPage.P1.addTetrisClears(tetrisCleared);
+            //if(gameMode="endless")MainPage.P1.endlessSubmitScore(score);
+            MainPage.P1.addLineClears(linesCleared);
+            MainPage.P1.addTetrisClears(tetrisCleared);
+
+            roamingSettings.Values["linesCleared"] = MainPage.P1.getLineClears();
+            roamingSettings.Values["tetrisCleared"] = MainPage.P1.getTetrisClears();
         }
 
         public int MaxPositionX(List<Vector2> list)
@@ -614,7 +618,7 @@ namespace nieTRIS_future
         {
             foreach (Vector2 v in CurrentBlockPositions)
             {
-                if ((int)v.Y < 0) currentGameState = GameStates.End;
+                if ((int)v.Y < 0) { currentGameState = GameStates.End; SubmitStats(); break; }
                 else board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
             }
         }
@@ -742,7 +746,6 @@ namespace nieTRIS_future
                     PauseDraw();
                     break;
                 case GameStates.End:
-                    SubmitStats();
                     EndedDraw();
                     break;
                 default:

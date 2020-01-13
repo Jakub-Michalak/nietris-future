@@ -12,14 +12,23 @@
         <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="30,75,0,0" Text="Stats" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" FontWeight="Bold"/>
+        
         <TextBlock HorizontalAlignment="Left" Margin="30,150,0,0" Text="Total lines cleared: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
-         <!-- obiekt gracza musi być tworzony gdzie indziej - dostępny globalnie  <Run Text="{x:Bind MainPage.P1.getLineClears()}" /> -->
+         <Run Text="{x:Bind textLinesCleared}" />
         </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="30,175,0,0" Text="Tetris clears:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
-
-        <TextBlock HorizontalAlignment="Left" Margin="30,225,0,0" Text="Endless high score:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="30,250,0,0" Text="Ultra high score:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
-        <TextBlock HorizontalAlignment="Left" Margin="30,275,0,0" Text="Fastest sprint:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,175,0,0" Text="Tetris clears: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
+         <Run Text="{x:Bind textTetrisCleared}" />
+        </TextBlock>
+        
+        <TextBlock HorizontalAlignment="Left" Margin="30,225,0,0" Text="Endless high score: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
+            <Run Text="{x:Bind textEndlessScore}" />
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="30,250,0,0" Text="Ultra high score: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
+            <Run Text="{x:Bind textUltraScore}" />
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="30,275,0,0" Text="Fastest sprint: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
+            <Run Text="{x:Bind textSprintTime}" />
+        </TextBlock>
 
 
 

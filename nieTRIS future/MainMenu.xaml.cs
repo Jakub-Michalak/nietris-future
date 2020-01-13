@@ -27,6 +27,7 @@ namespace nieTRIS_future
     {
         public static double musicVolume = 0.1;
         public static double sfxVolume = 1;
+        public static Player P1 = new Player();
 
         public MainPage()
         {

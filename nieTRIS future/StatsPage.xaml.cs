@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.System;
+using System.Diagnostics;
 using Windows.UI.Xaml.Documents;
 
 
@@ -25,6 +26,13 @@ namespace nieTRIS_future
     /// </summary>
     public sealed partial class StatsPage : Page
     {
+        static Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
+        string textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
+        string textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
+        string textEndlessScore = MainPage.P1.getEndlessScore().ToString();
+        string textUltraScore = MainPage.P1.getUltraScore().ToString();
+        string textSprintTime = MainPage.P1.getSprintTime().ToString();
+
         public StatsPage()
         {
             this.InitializeComponent();
