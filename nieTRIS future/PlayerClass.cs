@@ -7,6 +7,13 @@ public class Player
     private string rotationControls { get; set; }
     private int startingLevel { get; set; }
 
+    private int lineClears { get; set; } = 0;
+    private int tetrisClears { get; set; } = 0;
+
+    private int endlessHighScore { get; set; } = 0;
+    private int ultraHighScore { get; set; } = 0;
+    private double sprintBestTime { get; set; } = 0;
+
     public void SetTheme(string theme)
     {
         this.theme = theme;
@@ -45,5 +52,56 @@ public class Player
     public int GetStartingLevel()
     {
         return startingLevel;
+    }
+
+    public void addLineClears(int newClears)
+    {
+        lineClears = lineClears + newClears;
+    }
+
+    public int getLineClears()
+    {
+        return lineClears;
+    }
+
+    public void addTetrisClears(int newTetrises)
+    {
+        tetrisClears = tetrisClears + newTetrises;
+    }
+
+    public int getTetrisClears()
+    {
+        return tetrisClears;
+    }
+
+    public void endlessSubmitScore(int score)
+    {
+        if (score > endlessHighScore) endlessHighScore = score;
+    }
+
+    public int getEndlessScore()
+    {
+        return endlessHighScore;
+    }
+
+    public void ultraSubmitScore(int score)
+    {
+        if (score > ultraHighScore) ultraHighScore = score;
+    }
+
+    public int getUltraScore()
+    {
+        return ultraHighScore;
+    }
+
+    public void sprintSubmitTime(double time)
+    {
+        if (sprintBestTime == 0) sprintBestTime = time;
+        else if (time < sprintBestTime) sprintBestTime = time;
+    }
+
+    public double getSprintTime()
+    {
+        return sprintBestTime;
     }
 }
