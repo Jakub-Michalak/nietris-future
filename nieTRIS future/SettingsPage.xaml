@@ -9,9 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid KeyUp="Grid_KeyDown">
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/background3.png"/>
+        </Grid.Background>
         <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
-        <TextBlock HorizontalAlignment="Left" Margin="30,75,0,0" Text="Settings" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" FontWeight="Bold"/>
-        <Slider ValueChanged="SetMusicVolume" Loaded="SetMusicSliderValue" Header="Music volume" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,150,0,0" Height="70" Width="320" StepFrequency="0.1" Minimum="0" Maximum="1" TickFrequency="0.1" TickPlacement="Outside" />
-        <Slider ValueChanged="SetSfxVolume" Loaded="SetSfxSliderValue" Header="Sound effects volume" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,220,0,0" Height="70" Width="320" StepFrequency="0.1" Minimum="0" Maximum="1" TickFrequency="0.1" TickPlacement="Outside" />
+        <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" Text="Settings" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" FontWeight="Bold"/>
+        <Slider ValueChanged="SetMusicVolume" Loaded="SetMusicSliderValue" Header="Music volume" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,150,0,0" Height="70" Width="320" LargeChange="0.1" SmallChange="0.1" StepFrequency="0.1" Minimum="0" Maximum="1" TickFrequency="0.1" TickPlacement="Outside" />
+        <Slider ValueChanged="SetSfxVolume" Loaded="SetSfxSliderValue" Header="Sound effects volume" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,220,0,0" Height="70" Width="320" LargeChange="0.1" SmallChange="0.1" StepFrequency="0.1" Minimum="0" Maximum="1" TickFrequency="0.1" TickPlacement="Outside" />
     </Grid>
 </Page>

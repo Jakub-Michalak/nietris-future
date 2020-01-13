@@ -9,9 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid  KeyUp="Grid_KeyDown">
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/background3.png"/>
+        </Grid.Background>
         <Button Click="NavigateToMainMenu" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"  Style="{ThemeResource NavigationBackButtonNormalStyle}" Height="80" Width="80"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="30,75,0,0" Text="Stats" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="30,80,0,0" Text="Stats" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48" FontWeight="Bold"/>
         
         <TextBlock HorizontalAlignment="Left" Margin="30,150,0,0" Text="Total lines cleared: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24">
          <Run Text="{x:Bind textLinesCleared}" />

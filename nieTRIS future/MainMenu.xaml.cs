@@ -42,7 +42,7 @@ namespace nieTRIS_future
             else
             {
                 roamingSettings.Values.Add("musicVolume", 0.1);
-                roamingSettings.Values.Add("sfxVolume", 1);
+                roamingSettings.Values.Add("sfxVolume", 1.0);
                 musicVolume = (double)roamingSettings.Values["musicVolume"];
                 sfxVolume = (double)roamingSettings.Values["sfxVolume"];
             }
