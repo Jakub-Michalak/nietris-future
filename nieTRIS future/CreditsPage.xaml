@@ -29,70 +29,26 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-
                 </Grid.RowDefinitions>
                 <Image Grid.Row="0" Margin="300,100" Source="Assets/nieTris logo.png"/>
-                <TextBlock Grid.Row="1"  HorizontalAlignment="Center" FontWeight="Bold">by {insert studio name here}</TextBlock>
-                <TextBlock Grid.Row="2"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="3"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="4"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="22">WSZYSTKO</TextBlock>
-                <TextBlock Grid.Row="5"  HorizontalAlignment="Center" FontSize="16">by</TextBlock>
-                <TextBlock Grid.Row="6"  HorizontalAlignment="Center" FontSize="16">shio</TextBlock>
-                <TextBlock Grid.Row="7"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="8"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="9"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="22">TROCHĘ</TextBlock>
-                <TextBlock Grid.Row="11"  HorizontalAlignment="Center" FontSize="16">by</TextBlock>
-                <TextBlock Grid.Row="12"  HorizontalAlignment="Center" FontSize="16">Gumi</TextBlock>
-                <TextBlock Grid.Row="13"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="14"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="15"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="20">TROCHĘ WIĘCEJ</TextBlock>
-                <TextBlock Grid.Row="16"  HorizontalAlignment="Center" FontSize="16">by</TextBlock>
-                <TextBlock Grid.Row="17"  HorizontalAlignment="Center" FontSize="16">iCurbix</TextBlock>
-                <TextBlock Grid.Row="18"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="19"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="20"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="20">QA TEST LEADER</TextBlock>
-                <TextBlock Grid.Row="21"  HorizontalAlignment="Center" FontSize="16">by</TextBlock>
-                <TextBlock Grid.Row="22"  HorizontalAlignment="Center" FontSize="16">JaneQ</TextBlock>
-                <TextBlock Grid.Row="23"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="24"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="25"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="26"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="27"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="28"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="22">PARTNER STRATEGICZNY</TextBlock>
-                <Image Grid.Row="29" Margin="500,0" Source="Assets/motomoto.png"/>
-
-                <TextBlock Grid.Row="30"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="31"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="32"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="33"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="34"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="35"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="36"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="37"  HorizontalAlignment="Center"></TextBlock>
-                <TextBlock Grid.Row="38"  HorizontalAlignment="Center"></TextBlock>
-                <Button Grid.Row="39" x:Name="returnButton" Click="ReturnButton_Click" Content="RETURN" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="200" FontSize="24" FontWeight="Bold"/>
-
+                <TextBlock Grid.Row="1"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="32">made by</TextBlock>
+                <TextBlock Grid.Row="2"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="96">BLOBFISH</TextBlock>
+                <TextBlock Grid.Row="3"  HorizontalAlignment="Center" FontSize="42">Jakub Pietkiewicz</TextBlock>
+                <TextBlock Grid.Row="4"  HorizontalAlignment="Center" FontSize="42">Jakub Michalak</TextBlock>
+                <TextBlock Grid.Row="5"  HorizontalAlignment="Center" FontSize="96"></TextBlock>
+                <TextBlock Grid.Row="6"  HorizontalAlignment="Center" FontSize="32">Strategic partnerhsip</TextBlock>
+                <Image Grid.Row="7" Margin="500,0" Width="480" Source="Assets/motomoto.png"/>
+                <TextBlock Grid.Row="8"  HorizontalAlignment="Center" FontSize="96"></TextBlock>
+                <TextBlock Grid.Row="9"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="32">Special thanks to</TextBlock>
+                <TextBlock Grid.Row="10"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="48">iCurbix</TextBlock>
+                <TextBlock Grid.Row="11"  HorizontalAlignment="Center" FontSize="24">and his amazing work on rotation system</TextBlock>
+                <TextBlock Grid.Row="12"  HorizontalAlignment="Center" FontWeight="Bold" FontSize="48">JaneQ</TextBlock>
+                <TextBlock Grid.Row="13"  HorizontalAlignment="Center" FontSize="24">our lead quality assurance tester</TextBlock>
+                <TextBlock Grid.Row="14"  HorizontalAlignment="Center" FontSize="720"></TextBlock>
+                <TextBlock Grid.Row="15"  HorizontalAlignment="Center" FontSize="24">and</TextBlock>
+                <TextBlock Grid.Row="16"  HorizontalAlignment="Center" FontSize="48" FontWeight="Bold">YOU</TextBlock>
+                <Button Grid.Row="17" x:Name="returnButton" Click="ReturnButton_Click" Content="RETURN" HorizontalAlignment="Center" Margin="0,400,0,0"  VerticalAlignment="Bottom" Width="200" FontSize="24" FontWeight="Bold"/>
             </Grid>
         </ScrollViewer>
-
     </Grid>
 </Page>

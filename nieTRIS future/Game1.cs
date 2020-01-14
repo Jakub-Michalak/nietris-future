@@ -26,7 +26,7 @@ namespace nieTRIS_future
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        SpriteFont neuro;
+        public SpriteFont neuro;
 
         RenderTarget2D themeRenderer;
         RenderTarget2D boardRenderer;
@@ -46,6 +46,7 @@ namespace nieTRIS_future
         Texture2D GridTex;
         Texture2D GhostTex;
         Texture2D GameOverScreen;
+        public Texture2D WinScreen;
 
         Song BGM;
         SoundEffect RotateSFX;
@@ -63,6 +64,8 @@ namespace nieTRIS_future
         Tetromino currentTetromino;
         Tetromino heldTetromino;
         Tetromino tempTetromino;
+
+        Gamemode currentGamemode;
 
         private KeyboardState currentKeyboardState;
         private KeyboardState lastKeyboardState;
@@ -103,7 +106,8 @@ namespace nieTRIS_future
         {
             Game,
             Pause,
-            End
+            End,
+            Win
         }
 
         public GameStates currentGameState = GameStates.Game;
@@ -151,6 +155,7 @@ namespace nieTRIS_future
             theme = MainPage.P1.GetTheme();
             audioPack = MainPage.P1.GetAudioPack();
 
+            currentGamemode = MainPage.P1.GetGamemode();
 
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -175,6 +180,7 @@ namespace nieTRIS_future
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
             GameOverScreen = Content.Load<Texture2D>($@"Themes/GAMEOVER");
+            WinScreen = Content.Load<Texture2D>($@"Themes/WIN");
 
 
             BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
@@ -189,6 +195,10 @@ namespace nieTRIS_future
             MediaPlayer.Volume = (float)MainPage.musicVolume;
             SoundEffect.MasterVolume = (float)MainPage.sfxVolume;
             MediaPlayer.Play(BGM);
+
+            
+
+
 
         }
 
@@ -506,6 +516,10 @@ namespace nieTRIS_future
             ghostBlock();
 
 
+            if(currentGamemode.CheckWinCondition(linesCleared))
+            {
+                currentGameState = GameStates.Win;
+            }
 
 
         }
@@ -520,6 +534,11 @@ namespace nieTRIS_future
         }
 
         private void EndUpdate()
+        {
+
+        }
+
+        private void WinUpdate()
         {
 
         }
@@ -758,6 +777,9 @@ namespace nieTRIS_future
                     break;
                 case GameStates.End:
                     EndedDraw();
+                    break;
+                case GameStates.Win:
+                    WinDraw();
                     break;
                 default:
                     break;
@@ -1064,6 +1086,37 @@ namespace nieTRIS_future
             spriteBatch.Begin();
 
             spriteBatch.Draw(themeRenderer, GraphicsDevice.Viewport.Bounds, Color.White);
+
+            spriteBatch.End();
+        }
+
+        private void WinDraw()
+        {
+            GraphicsDevice.SetRenderTarget(themeRenderer);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+
+            spriteBatch.Draw(WinScreen, new Rectangle(0, 0, 1920, 1080), Color.White);
+
+            spriteBatch.End();
+
+            
+
+
+            GraphicsDevice.SetRenderTarget(null);
+
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(themeRenderer, GraphicsDevice.Viewport.Bounds, Color.White);
+            spriteBatch.DrawString(neuro, "SCORE", new Vector2((1920 - neuro.MeasureString("SCORE").X) / 2, 400), Color.White);
+            spriteBatch.DrawString(neuro, $"{score}", new Vector2((1920 - neuro.MeasureString($"{score}").X) / 2, 465 ), Color.White);
+            spriteBatch.DrawString(neuro, "LINES CLEARED", new Vector2((1920 - neuro.MeasureString("LINES CLEARED").X) / 2, 530) , Color.White);
+            spriteBatch.DrawString(neuro, $"{linesCleared}", new Vector2((1920 - neuro.MeasureString($"{linesCleared}").X) / 2, 595), Color.White);
+            spriteBatch.DrawString(neuro, "TETRIS CLEARED", new Vector2((1920 - neuro.MeasureString("TETRIS CLEARED").X) / 2,660), Color.White);
+            spriteBatch.DrawString(neuro, $"{tetrisCleared}", new Vector2((1920 - neuro.MeasureString($"{tetrisCleared}").X) / 2,725), Color.White);
+            spriteBatch.DrawString(neuro, "TIME", new Vector2((1920 - neuro.MeasureString("TIME").X) / 2, 790), Color.White);
+            spriteBatch.DrawString(neuro, $"-", new Vector2((1920 - neuro.MeasureString($"-").X) / 2, 855), Color.White);
 
             spriteBatch.End();
         }

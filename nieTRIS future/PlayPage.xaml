@@ -47,8 +47,6 @@
                         <ComboBox SelectionChanged="SetAudioPack"  Header="Audio pack" PlaceholderText="Default" Width="360" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontFamily="Segoe UI" Margin="0,0,0,5">
                             <x:String>Default</x:String>
                             <x:String>Quake</x:String>
-                            <x:String>Woop</x:String>
-                            <x:String>Waterdrops</x:String>
                             <x:String>Miku</x:String>
                         </ComboBox>
                     <!--<TextBlock Text="Rotation controls:" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" FontWeight="Normal" FontFamily="Segoe UI"/>

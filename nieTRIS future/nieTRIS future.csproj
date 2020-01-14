@@ -114,6 +114,10 @@
     <Compile Include="CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Gamemode\EndlessGM.cs" />
+    <Compile Include="Gamemode\Gamemode.cs" />
+    <Compile Include="Gamemode\MarathonGM.cs" />
+    <Compile Include="Gamemode\SprintGM.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>

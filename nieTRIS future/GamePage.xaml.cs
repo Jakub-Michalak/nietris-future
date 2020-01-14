@@ -48,6 +48,7 @@ namespace nieTRIS_future
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
+            _game.currentGameState = Game1.GameStates.End;
             _game.MiuzikuStoppo();
         }
 
@@ -66,7 +67,7 @@ namespace nieTRIS_future
         {
             if (e.Key == Windows.System.VirtualKey.GamepadView || e.Key == Windows.System.VirtualKey.Q)
             {
-                _game.currentGameState = Game1.GameStates.End;
+
                 Frame.Navigate(typeof(MainPage));
             }
         }

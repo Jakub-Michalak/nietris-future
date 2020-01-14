@@ -19,131 +19,89 @@
 /processorParam:Quality=Best
 /build:Audio/Default/BGM.mp3
 
-#begin Audio/Default/harddrop.wav
-/importer:WavImporter
+#begin Audio/Default/harddrop.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Default/harddrop.wav
+/build:Audio/Default/harddrop.mp3
 
-#begin Audio/Default/lineclear.wav
-/importer:WavImporter
+#begin Audio/Default/lineclear.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Default/lineclear.wav
+/build:Audio/Default/lineclear.mp3
 
-#begin Audio/Default/rotate.wav
-/importer:WavImporter
+#begin Audio/Default/rotate.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Default/rotate.wav
+/build:Audio/Default/rotate.mp3
 
-#begin Audio/Default/tetris.wav
-/importer:WavImporter
+#begin Audio/Default/tetris.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Default/tetris.wav
+/build:Audio/Default/tetris.mp3
 
-#begin Audio/Miku/BGM.wav
-/importer:WavImporter
+#begin Audio/Miku/BGM.mp3
+/importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Audio/Miku/BGM.wav
+/build:Audio/Miku/BGM.mp3
 
-#begin Audio/Miku/harddrop.wav
-/importer:WavImporter
+#begin Audio/Miku/harddrop.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Miku/harddrop.wav
+/build:Audio/Miku/harddrop.mp3
 
-#begin Audio/Miku/lineclear.wav
-/importer:WavImporter
+#begin Audio/Miku/lineclear.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Miku/lineclear.wav
+/build:Audio/Miku/lineclear.mp3
 
-#begin Audio/Miku/rotate.wav
-/importer:WavImporter
+#begin Audio/Miku/rotate.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Miku/rotate.wav
+/build:Audio/Miku/rotate.mp3
 
-#begin Audio/Miku/tetris.wav
-/importer:WavImporter
+#begin Audio/Miku/tetris.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Miku/tetris.wav
+/build:Audio/Miku/tetris.mp3
 
-#begin Audio/Quake/harddrop.wav
-/importer:WavImporter
+#begin Audio/Quake/BGM.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Audio/Quake/BGM.mp3
+
+#begin Audio/Quake/harddrop.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Quake/harddrop.wav
+/build:Audio/Quake/harddrop.mp3
 
-#begin Audio/Quake/lineclear.wav
-/importer:WavImporter
+#begin Audio/Quake/lineclear.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Quake/lineclear.wav
+/build:Audio/Quake/lineclear.mp3
 
-#begin Audio/Quake/rotate.wav
-/importer:WavImporter
+#begin Audio/Quake/rotate.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Quake/rotate.wav
+/build:Audio/Quake/rotate.mp3
 
-#begin Audio/Quake/tetris.wav
-/importer:WavImporter
+#begin Audio/Quake/tetris.mp3
+/importer:Mp3Importer
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Quake/tetris.wav
-
-#begin Audio/Waterdrops/harddrop.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Waterdrops/harddrop.wav
-
-#begin Audio/Waterdrops/lineclear.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Waterdrops/lineclear.wav
-
-#begin Audio/Waterdrops/rotate.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Waterdrops/rotate.wav
-
-#begin Audio/Waterdrops/tetris.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Waterdrops/tetris.wav
-
-#begin Audio/Woop/harddrop.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Woop/harddrop.wav
-
-#begin Audio/Woop/lineclear.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Woop/lineclear.wav
-
-#begin Audio/Woop/rotate.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Woop/rotate.wav
-
-#begin Audio/Woop/tetris.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Audio/Woop/tetris.wav
+/build:Audio/Quake/tetris.mp3
 
 #begin Fonts/font.spritefont
 /importer:FontDescriptionImporter
@@ -691,4 +649,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Themes/Retro/Z.png
+
+#begin Themes/WIN.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Themes/WIN.png
 

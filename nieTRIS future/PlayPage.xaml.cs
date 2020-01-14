@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Input;
 using System.Diagnostics;
 using Windows.System;
 
+
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace nieTRIS_future
@@ -15,7 +16,7 @@ namespace nieTRIS_future
     public sealed partial class PlayPage : Page
     {
         bool customizationFocused = false;
-        string selectedMode;
+        Gamemode selectedMode;
         
 
         public PlayPage()
@@ -35,15 +36,16 @@ namespace nieTRIS_future
             switch (position)
             {
                 case 1:
-                    selectedMode = "Endless";
+                    selectedMode = new EndlessGM();
                     break;
                 case 2:
-                    selectedMode = "Marathon";
+                    selectedMode = new MarathonGM();
                     break;
                 case 3:
-                    selectedMode = "Sprint";
+                    selectedMode = new SprintGM();
                     break;
             }
+            MainPage.P1.SetGamemode(selectedMode);
         }
 
         private void setFocusToPlayButton(object sender, RoutedEventArgs e)
@@ -139,12 +141,6 @@ namespace nieTRIS_future
                         break;
                     case "Quake":
                         MainPage.P1.SetAudioPack("Quake");
-                        break;
-                    case "Woop":
-                        MainPage.P1.SetAudioPack("Woop");
-                        break;
-                    case "Waterdrops":
-                        MainPage.P1.SetAudioPack("Waterdrops");
                         break;
                     case "Miku":
                         MainPage.P1.SetAudioPack("Miku");

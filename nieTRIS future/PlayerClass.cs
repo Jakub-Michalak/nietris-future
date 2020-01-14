@@ -1,7 +1,10 @@
-﻿using System;
+﻿
+using nieTRIS_future;
+using System;
 
 public class Player
 {
+    private Gamemode gamemode { get; set; }
     private string theme { get; set; }
     private string audioPack { get; set; }
     private string rotationControls { get; set; }
@@ -13,6 +16,16 @@ public class Player
     private int endlessHighScore { get; set; } = 0;
     private int ultraHighScore { get; set; } = 0;
     private double sprintBestTime { get; set; } = 0;
+
+    public void SetGamemode(Gamemode gamemode)
+    {
+        this.gamemode = gamemode;
+    }
+
+    public Gamemode GetGamemode()
+    {
+        return gamemode;
+    }
 
     public void SetTheme(string theme)
     {
