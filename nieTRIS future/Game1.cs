@@ -87,8 +87,6 @@ namespace nieTRIS_future
         bool blockHeld = false;
         bool blockCanMoveDown = true;
 
-
-
         static List<Vector2> CurrentBlockPositions;
         static List<Vector2> CurrentGhostPositions;
 
@@ -116,11 +114,12 @@ namespace nieTRIS_future
 
         char?[,] board = new char?[10, 40];
 
-
         private double DAStimerLeft;
+
         private double DAStimerRight;
 
         private bool DASclickedRight = true;
+
         private bool DASclickedLeft = true;
 
         public Game1()
@@ -261,6 +260,7 @@ namespace nieTRIS_future
             MediaPlayer.Play(BGM);
 
         }
+
         public void MiuzikuStoppo()
         {
             MediaPlayer.Stop();
@@ -316,14 +316,14 @@ namespace nieTRIS_future
 
         private void GameUpdate(GameTime gameTime)
         {
-
+            ///MISC
+            //PAUSE
             if (currentGamepadState.IsButtonDown(Buttons.Start) && lastGamepadState.IsButtonUp(Buttons.Start) || currentKeyboardState.IsKeyDown(Keys.P) && lastKeyboardState.IsKeyUp(Keys.P))
             {
                 currentGameState = GameStates.Pause;
             }
 
-            if (nextTetromino.Count < 7) nextTetromino.AddRange(BagRandomizer.GetNewBag());
-
+            //RESETING
             if (isBlockPlaced)
             {
                 currentTetromino = nextTetromino[0];
@@ -337,31 +337,21 @@ namespace nieTRIS_future
 
             timer += timepassed;
 
+
+            ///GENERATION PHASE
+            //NEW BAG
+            if (nextTetromino.Count < 7) nextTetromino.AddRange(BagRandomizer.GetNewBag());
+
+
+            ///FALLING PHASE
+            //AUTO MOVE DOWN
             if (timer >= Math.Pow((0.8 - ((level - 1) * 0.007)), (level - 1)))
             {
                 Move(Directions.Down);
                 timer = 0;
             }
 
-            if ((currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift)) && blockHeld == false)
-            {
-                if (heldTetromino == null)
-                {
-                    heldTetromino = currentTetromino;
-                    currentTetromino = nextTetromino[0];
-                    CurrentBlockPositions = currentTetromino.StartingPosition();
-                    nextTetromino.RemoveAt(0);
-                }
-                else
-                {
-                    tempTetromino = currentTetromino;
-                    currentTetromino = heldTetromino;
-                    heldTetromino = tempTetromino;
-                    CurrentBlockPositions = currentTetromino.StartingPosition();
-                }
-                blockHeld = true;
-            }
-
+            //HARD DROP?
             if (currentGamepadState.IsButtonDown(Buttons.DPadUp) && lastGamepadState.IsButtonUp(Buttons.DPadUp) || currentKeyboardState.IsKeyDown(Keys.Up) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
                 dropDistance = (int)CurrentGhostPositions[1].Y - (int)CurrentBlockPositions[1].Y;
@@ -372,7 +362,21 @@ namespace nieTRIS_future
                 isBlockPlaced = true;
             }
 
-            // Przesówanie bloku w lewo
+
+            ///LOCK PHASE
+            //AUTO LOCK
+            if (blockCanMoveDown == false)
+            {
+                lockTimer += timepassed;
+                if (lockTimer >= 0.5)
+                {
+                    PlaceBlock();
+                    isBlockPlaced = true;
+                    lockTimer = 0;
+                }
+            }
+
+            //MOVING LEFT
             if (DASclickedLeft && !(currentGamepadState.IsButtonDown(Buttons.DPadLeft) || currentKeyboardState.IsKeyDown(Keys.Left)))
             {
                 Debug.WriteLine("czyszczenie DASclickedLeft");
@@ -390,7 +394,7 @@ namespace nieTRIS_future
                     Move(Directions.Left);
                     DASclickedLeft = true;
                 }
-                if ( gameTime.TotalGameTime.TotalMilliseconds > DAStimerLeft + DAS)
+                if (gameTime.TotalGameTime.TotalMilliseconds > DAStimerLeft + DAS)
                 {
                     if (gameTime.TotalGameTime.TotalMilliseconds - ARRtimer > ARR)
                     {
@@ -402,7 +406,7 @@ namespace nieTRIS_future
                 }
             }
 
-            // Przesówanie bloku w prawo
+            //MOVING RIGHT
             if (DASclickedRight && !(currentGamepadState.IsButtonDown(Buttons.DPadRight) || currentKeyboardState.IsKeyDown(Keys.Right)))
             {
                 Debug.WriteLine("czyszczenie DASclickedRight");
@@ -432,9 +436,7 @@ namespace nieTRIS_future
                 }
             }
 
-
-
-
+            //SOFT DROP
             if (currentGamepadState.IsButtonDown(Buttons.DPadDown) || currentKeyboardState.IsKeyDown(Keys.Down))
             {
                 if (timer >= Math.Pow((0.8 - ((level - 1) * 0.007)), level - 1) / 20)
@@ -447,25 +449,7 @@ namespace nieTRIS_future
             }
 
 
-            DeleteLines();
-
-
-            if (linesCleared >= level * 10 + 10)
-            {
-                level++;
-            }
-
-            if (blockCanMoveDown == false)
-            {
-                lockTimer += timepassed;
-                if (lockTimer >= 0.5)
-                {
-                    PlaceBlock();
-                    isBlockPlaced = true;
-                    lockTimer = 0;
-                }
-            }
-
+            //ROTATE
             if (currentGamepadState.IsButtonDown(Buttons.B) && lastGamepadState.IsButtonUp(Buttons.B) || currentKeyboardState.IsKeyDown(Keys.X) && lastKeyboardState.IsKeyUp(Keys.X))
             {
                 lockTimer = 0;
@@ -489,9 +473,38 @@ namespace nieTRIS_future
                 else if (currentRotation == Tetromino.rotations.rotation4) currentRotation = Tetromino.rotations.rotation3;
             }
 
+            //HOLD
+            if ((currentGamepadState.IsButtonDown(Buttons.LeftShoulder) && lastGamepadState.IsButtonUp(Buttons.LeftShoulder) || currentKeyboardState.IsKeyDown(Keys.LeftShift) && lastKeyboardState.IsKeyUp(Keys.LeftShift)) && blockHeld == false)
+            {
+                if (heldTetromino == null)
+                {
+                    heldTetromino = currentTetromino;
+                    currentTetromino = nextTetromino[0];
+                    CurrentBlockPositions = currentTetromino.StartingPosition();
+                    nextTetromino.RemoveAt(0);
+                }
+                else
+                {
+                    tempTetromino = currentTetromino;
+                    currentTetromino = heldTetromino;
+                    heldTetromino = tempTetromino;
+                    CurrentBlockPositions = currentTetromino.StartingPosition();
+                }
+                blockHeld = true;
+            }
 
+            ///ELIMINATE PHASE
+            DeleteLines();
 
+            //CHECK LEVEL UP
+            if (linesCleared >= level * 10 + 10)
+            {
+                level++;
+            }
+
+            ///GHOST BLOCK
             ghostBlock();
+
 
 
 
@@ -555,7 +568,6 @@ namespace nieTRIS_future
             if (linesClearedSimultaneously == 4) { tetrisCleared++; AddScore("tetris"); TetrisSFX.CreateInstance().Play(); }
         }
 
-
         protected void AddScore(string source, int dropDistance = 0)
         {
             if (source == "single") score = score + 100 * level;
@@ -610,7 +622,7 @@ namespace nieTRIS_future
         {
             foreach (Vector2 v in CurrentBlockPositions)
             {
-                if ((int)v.Y < 0)
+                if ((int)v.Y < 0 && !CanMove(Directions.Down,CurrentBlockPositions))
                 {
                     currentGameState = GameStates.End; SubmitStats(); 
                     break;
@@ -692,6 +704,7 @@ namespace nieTRIS_future
                         for (int i = 0; i < CurrentBlockPositions.Count; i++)
                         {
                             CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X - 1, CurrentBlockPositions[i].Y);
+                            lockTimer = 0;
                         }
                     }
                     else
@@ -705,6 +718,7 @@ namespace nieTRIS_future
                         for (int i = 0; i < CurrentBlockPositions.Count; i++)
                         {
                             CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X + 1, CurrentBlockPositions[i].Y);
+                            lockTimer = 0;
                         }
                     }
                     else
@@ -719,6 +733,7 @@ namespace nieTRIS_future
                         for (int i = 0; i < CurrentBlockPositions.Count; i++)
                         {
                             CurrentBlockPositions[i] = new Vector2(CurrentBlockPositions[i].X, CurrentBlockPositions[i].Y + 1);
+                            lockTimer = 0;
                         }
                     }
                     else

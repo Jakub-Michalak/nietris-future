@@ -37,7 +37,7 @@
             <Button.Flyout>
                 <Flyout>
                     <StackPanel Width="360">
-                        <Slider ValueChanged="SetStartingLevel" Header="Starting level" SmallChange="1" LargeChange="1" StepFrequency="1" Minimum="0" Maximum="10" FontSize="18" TickFrequency="1" TickPlacement="Outside" />
+                        <Slider ValueChanged="SetStartingLevel" Header="Starting level" SmallChange="1" LargeChange="1" StepFrequency="1" Minimum="0" Maximum="15" FontSize="18" TickFrequency="1" TickPlacement="Outside" />
                         <ComboBox SelectionChanged="SetTheme"  Header="Theme" PlaceholderText="Neon" Width="360" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Margin="0,0,0,5">
                             <x:String>Neon</x:String>
                             <x:String>Eggplant</x:String>
