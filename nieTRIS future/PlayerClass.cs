@@ -14,7 +14,7 @@ public class Player
     private int tetrisClears { get; set; } = 0;
 
     private int endlessHighScore { get; set; } = 0;
-    private int ultraHighScore { get; set; } = 0;
+    private int marathonHighScore { get; set; } = 0;
     private double sprintBestTime { get; set; } = 0;
 
     public void SetGamemode(Gamemode gamemode)
@@ -97,14 +97,14 @@ public class Player
         return endlessHighScore;
     }
 
-    public void ultraSubmitScore(int score)
+    public void marathonSubmitScore(int score)
     {
-        if (score > ultraHighScore) ultraHighScore = score;
+        if (score > marathonHighScore) marathonHighScore = score;
     }
 
-    public int getUltraScore()
+    public int getMarathonScore()
     {
-        return ultraHighScore;
+        return marathonHighScore;
     }
 
     public void sprintSubmitTime(double time)

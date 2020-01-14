@@ -32,8 +32,9 @@
                 </Grid>
             </FlipView.Items>
         </FlipView>
-        <Button x:Name="PlayButton" Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="0,0,520,66" VerticalAlignment="Bottom" Width="400" FontSize="56" FontWeight="Bold" Loaded="setFocusToPlayButton"/>
-        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="520,0,0,66" VerticalAlignment="Bottom" FontSize="56" FontWeight="Bold" Width="400" Click="customizationMenuFocused">
+        <Button x:Name="ControlsButton" Click="NavigateToControls" Content="CONTROLS" HorizontalAlignment="Center" Margin="0,0,900,66" VerticalAlignment="Bottom" Width="400" FontSize="56" FontWeight="Bold"/>
+        <Button x:Name="PlayButton" Click="NavigateToGame" Content="PLAY" HorizontalAlignment="Center" Margin="0,0,0,66" VerticalAlignment="Bottom" Width="400" FontSize="56" FontWeight="Bold" Loaded="setFocusToPlayButton"/>
+        <Button Content="CUSTOMIZE" HorizontalAlignment="Center" Margin="900,0,0,66" VerticalAlignment="Bottom" FontSize="56" FontWeight="Bold" Width="400" Click="customizationMenuFocused">
             <Button.Flyout>
                 <Flyout>
                     <StackPanel Width="360">

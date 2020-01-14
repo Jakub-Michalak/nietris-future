@@ -22,6 +22,10 @@ namespace nieTRIS_future
         Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
         double ARR = 50;
         double DAS = 300;
+        int GameTotalMinutes;
+        int GameTotalSeconds;
+        int GameTotalMilliseconds;
+        double GameTotal;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -518,7 +522,12 @@ namespace nieTRIS_future
 
             if(currentGamemode.CheckWinCondition(linesCleared))
             {
+                GameTotalMinutes = gameTime.TotalGameTime.Minutes;
+                GameTotalSeconds = gameTime.TotalGameTime.Seconds;
+                GameTotalMilliseconds = gameTime.TotalGameTime.Milliseconds;
+                GameTotal = gameTime.ElapsedGameTime.TotalMilliseconds;
                 currentGameState = GameStates.Win;
+                SubmitStats(true);
             }
 
 
@@ -597,12 +606,17 @@ namespace nieTRIS_future
 
         }
 
-        protected void SubmitStats()
+        protected void SubmitStats(bool win)
         {
-            //if(gameMode="endless")MainPage.P1.endlessSubmitScore(score);
+            if(currentGamemode.getName() == "Endless")MainPage.P1.endlessSubmitScore(score);
+            if(currentGamemode.getName() == "Sprint" && win)MainPage.P1.sprintSubmitTime(GameTotal);
+            if(currentGamemode.getName() == "Marathon" && win) MainPage.P1.marathonSubmitScore(score);
             MainPage.P1.addLineClears(linesCleared);
             MainPage.P1.addTetrisClears(tetrisCleared);
 
+            roamingSettings.Values["endlessHighScore"] = MainPage.P1.getEndlessScore();
+            roamingSettings.Values["sprintBestTime"] = MainPage.P1.getSprintTime();
+            roamingSettings.Values["marathonHighScore"] = MainPage.P1.getMarathonScore();
             roamingSettings.Values["linesCleared"] = MainPage.P1.getLineClears();
             roamingSettings.Values["tetrisCleared"] = MainPage.P1.getTetrisClears();
         }
@@ -643,7 +657,8 @@ namespace nieTRIS_future
             {
                 if ((int)v.Y < 0 && !CanMove(Directions.Down,CurrentBlockPositions))
                 {
-                    currentGameState = GameStates.End; SubmitStats(); 
+                    currentGameState = GameStates.End;
+                    SubmitStats(false); 
                     break;
                 }
                 else board[(int)v.X, 20 + (int)v.Y] = currentTetromino.PieceSymbol();
@@ -1116,7 +1131,7 @@ namespace nieTRIS_future
             spriteBatch.DrawString(neuro, "TETRIS CLEARED", new Vector2((1920 - neuro.MeasureString("TETRIS CLEARED").X) / 2,660), Color.White);
             spriteBatch.DrawString(neuro, $"{tetrisCleared}", new Vector2((1920 - neuro.MeasureString($"{tetrisCleared}").X) / 2,725), Color.White);
             spriteBatch.DrawString(neuro, "TIME", new Vector2((1920 - neuro.MeasureString("TIME").X) / 2, 790), Color.White);
-            spriteBatch.DrawString(neuro, $"-", new Vector2((1920 - neuro.MeasureString($"-").X) / 2, 855), Color.White);
+            spriteBatch.DrawString(neuro, $"{GameTotalMinutes}:{GameTotalSeconds}:{GameTotalMilliseconds}", new Vector2((1920 - neuro.MeasureString($"{GameTotalMinutes}:{GameTotalSeconds}:{GameTotalMilliseconds}").X) / 2, 855), Color.White);
 
             spriteBatch.End();
         }

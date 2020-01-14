@@ -16,7 +16,10 @@ namespace nieTRIS_future
             return false;
         }
 
-
+        public override string getName()
+        {
+            return "Endless";
+        }
 
     }
 }

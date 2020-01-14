@@ -21,5 +21,9 @@ namespace nieTRIS_future
 
 
         //WYPISYWANIE DANYCH W TRAKCIE
+        public virtual string getName()
+        {
+            return "no game mode";
+        }
     }
 }

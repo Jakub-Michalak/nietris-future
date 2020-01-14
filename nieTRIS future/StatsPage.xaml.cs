@@ -31,7 +31,7 @@ namespace nieTRIS_future
         string textLinesCleared;
         string textTetrisCleared;
         string textEndlessScore;
-        string textUltraScore;
+        string textMarathonScore;
         string textSprintTime;
 
         public StatsPage()
@@ -40,9 +40,6 @@ namespace nieTRIS_future
             {
                 textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
                 textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
-                textEndlessScore = MainPage.P1.getEndlessScore().ToString();
-                textUltraScore = MainPage.P1.getUltraScore().ToString();
-                textSprintTime = MainPage.P1.getSprintTime().ToString();
             }
             else
             {
@@ -50,9 +47,36 @@ namespace nieTRIS_future
                 roamingSettings.Values.Add("tetrisCleared", 0);
                 textLinesCleared = roamingSettings.Values["linesCleared"].ToString();
                 textTetrisCleared = roamingSettings.Values["tetrisCleared"].ToString();
-                textEndlessScore = MainPage.P1.getEndlessScore().ToString();
-                textUltraScore = MainPage.P1.getUltraScore().ToString();
-                textSprintTime = MainPage.P1.getSprintTime().ToString();
+            }
+
+            if(roamingSettings.Values.ContainsKey("endlessHighScore"))
+            {
+                textEndlessScore = roamingSettings.Values["endlessHighScore"].ToString();
+            }
+            else
+            {
+                roamingSettings.Values.Add("endlessHighScore", 0);
+                textEndlessScore = roamingSettings.Values["endlessHighScore"].ToString();
+            }
+
+            if(roamingSettings.Values.ContainsKey("marathonHighScore"))
+            {
+                textMarathonScore = roamingSettings.Values["marathonHighScore"].ToString();
+            }
+            else
+            {
+                roamingSettings.Values.Add("marathonHighScore", 0);
+                textMarathonScore = roamingSettings.Values["marathonHighScore"].ToString();
+            }
+
+            if(roamingSettings.Values.ContainsKey("sprintBestTime"))
+            {
+                textSprintTime = roamingSettings.Values["sprintBestTime"].ToString();
+            }
+            else
+            {
+                roamingSettings.Values.Add("sprintBestTime", 0.0);
+                textSprintTime = roamingSettings.Values["sprintBestTime"].ToString();
             }
             this.InitializeComponent();
         }

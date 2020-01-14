@@ -16,6 +16,9 @@ namespace nieTRIS_future
             if (clearedLine >= 150) return true;
             else return false;
         }
-
+        public override string getName()
+        {
+            return "Marathon";
+        }
     }
 }

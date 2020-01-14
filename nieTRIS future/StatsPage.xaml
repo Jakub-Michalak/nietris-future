@@ -26,8 +26,8 @@
         <TextBlock HorizontalAlignment="Left" Margin="60,500,0,0" Text="Endless high score: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48">
             <Run Text="{x:Bind textEndlessScore}" />
         </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="60,550,0,0" Text="Ultra high score: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48">
-            <Run Text="{x:Bind textUltraScore}" />
+        <TextBlock HorizontalAlignment="Left" Margin="60,550,0,0" Text="Marathon high score: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48">
+            <Run Text="{x:Bind textMarathonScore}" />
         </TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="60,600,0,0" Text="Fastest sprint: " TextWrapping="Wrap" VerticalAlignment="Top" FontSize="48">
             <Run Text="{x:Bind textSprintTime}" />

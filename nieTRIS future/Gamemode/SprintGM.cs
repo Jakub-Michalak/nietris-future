@@ -18,6 +18,9 @@ namespace nieTRIS_future
             else return false;
         }
 
-
+        public override string getName()
+        {
+            return "Sprint";
+        }
     }
 }

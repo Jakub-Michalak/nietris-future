@@ -73,6 +73,11 @@ namespace nieTRIS_future
             this.Frame.Navigate(typeof(GamePage));
         }
 
+        private void NavigateToControls(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlsPage));
+        }
+
         private void SetStartingLevel(object sender, RoutedEventArgs e)
         {
             Slider sl = sender as Slider;
