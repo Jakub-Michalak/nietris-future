@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\FlipCovers\sprint.png" />
+    <Content Include="Assets\keyboard controls.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
@@ -198,6 +199,7 @@
     <Content Include="Assets\WideTile.scale-125.png" />
     <Content Include="Assets\WideTile.scale-150.png" />
     <Content Include="Assets\WideTile.scale-200.png" />
+    <Content Include="Assets\xbox controls.png" />
     <Content Include="Content\Themes\Eggplant\BCG.jpg" />
     <Content Include="Content\Themes\Eggplant\Grid.png" />
     <Content Include="Content\Themes\Eggplant\I.png" />

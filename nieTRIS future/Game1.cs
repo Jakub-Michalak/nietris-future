@@ -45,6 +45,7 @@ namespace nieTRIS_future
         Texture2D OverlayTex;
         Texture2D GridTex;
         Texture2D GhostTex;
+        Texture2D GameOverScreen;
 
         Song BGM;
         SoundEffect RotateSFX;
@@ -174,6 +175,8 @@ namespace nieTRIS_future
             BackgroundTex = Content.Load<Texture2D>($@"Themes/{theme}/BCG");
             OverlayTex = Content.Load<Texture2D>($@"Themes/{theme}/Overlay");
             GridTex = Content.Load<Texture2D>($@"Themes/{theme}/Grid");
+            GameOverScreen = Content.Load<Texture2D>($@"Themes/GAMEOVER");
+
 
             BGM = Content.Load<Song>($"Audio/{audioPack}/BGM");
             RotateSFX = Content.Load<SoundEffect>($"Audio/{audioPack}/rotate");
@@ -1035,7 +1038,7 @@ namespace nieTRIS_future
             GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
-            spriteBatch.DrawString(neuro,"GAME OVER", new Vector2((1920 - neuro.MeasureString("GAME OVER").X)/2, (1080 - neuro.MeasureString("GAME OVER").Y) / 2),Color.White);
+            spriteBatch.Draw(GameOverScreen, new Rectangle(0,0,1920, 1080), Color.White);
 
             spriteBatch.End();
 
