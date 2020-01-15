@@ -71,7 +71,8 @@ namespace nieTRIS_future
 
             if(roamingSettings.Values.ContainsKey("sprintBestTime"))
             {
-                textSprintTime = roamingSettings.Values["sprintBestTime"].ToString();
+                TimeSpan time = TimeSpan.FromMilliseconds((double)roamingSettings.Values["sprintBestTime"]);
+                textSprintTime = $"{time.Minutes}:{time.Seconds}:{time.Milliseconds}";
             }
             else
             {

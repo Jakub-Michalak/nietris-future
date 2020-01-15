@@ -22,10 +22,8 @@ namespace nieTRIS_future
         Windows.Storage.ApplicationDataContainer roamingSettings = Windows.Storage.ApplicationData.Current.RoamingSettings;
         double ARR = 50;
         double DAS = 300;
-        int GameTotalMinutes;
-        int GameTotalSeconds;
-        int GameTotalMilliseconds;
-        double GameTotal;
+
+        double GameTotal = 0;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -129,6 +127,7 @@ namespace nieTRIS_future
         private bool DASclickedRight = true;
 
         private bool DASclickedLeft = true;
+        private double TempGameTotal;
 
         public Game1()
         {
@@ -200,8 +199,7 @@ namespace nieTRIS_future
             SoundEffect.MasterVolume = (float)MainPage.sfxVolume;
             MediaPlayer.Play(BGM);
 
-            
-
+            GameTotal = 0;
 
 
         }
@@ -231,6 +229,10 @@ namespace nieTRIS_future
             currentTetromino = nextTetromino[0];
             nextTetromino.RemoveAt(0);
             CurrentBlockPositions = currentTetromino.StartingPosition();
+
+            TempGameTotal = 0;
+
+            
 
 
 
@@ -519,14 +521,14 @@ namespace nieTRIS_future
             ///GHOST BLOCK
             ghostBlock();
 
+            TempGameTotal += gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if(currentGamemode.CheckWinCondition(linesCleared))
+            if (currentGamemode.CheckWinCondition(linesCleared))
             {
-                GameTotalMinutes = gameTime.TotalGameTime.Minutes;
-                GameTotalSeconds = gameTime.TotalGameTime.Seconds;
-                GameTotalMilliseconds = gameTime.TotalGameTime.Milliseconds;
-                GameTotal = gameTime.ElapsedGameTime.TotalMilliseconds;
+
+                GameTotal = TempGameTotal;
                 currentGameState = GameStates.Win;
+                
                 SubmitStats(true);
             }
 
@@ -1131,7 +1133,7 @@ namespace nieTRIS_future
             spriteBatch.DrawString(neuro, "TETRIS CLEARED", new Vector2((1920 - neuro.MeasureString("TETRIS CLEARED").X) / 2,660), Color.White);
             spriteBatch.DrawString(neuro, $"{tetrisCleared}", new Vector2((1920 - neuro.MeasureString($"{tetrisCleared}").X) / 2,725), Color.White);
             spriteBatch.DrawString(neuro, "TIME", new Vector2((1920 - neuro.MeasureString("TIME").X) / 2, 790), Color.White);
-            spriteBatch.DrawString(neuro, $"{GameTotalMinutes}:{GameTotalSeconds}:{GameTotalMilliseconds}", new Vector2((1920 - neuro.MeasureString($"{GameTotalMinutes}:{GameTotalSeconds}:{GameTotalMilliseconds}").X) / 2, 855), Color.White);
+            spriteBatch.DrawString(neuro, $"{TimeSpan.FromMilliseconds(GameTotal).Minutes}:{TimeSpan.FromMilliseconds(GameTotal).Seconds}:{TimeSpan.FromMilliseconds(GameTotal).Milliseconds}", new Vector2((1920 - neuro.MeasureString($"{TimeSpan.FromMilliseconds(GameTotal).Minutes}:{TimeSpan.FromMilliseconds(GameTotal).Seconds}:{TimeSpan.FromMilliseconds(GameTotal).Milliseconds}").X) / 2, 855), Color.White);
 
             spriteBatch.End();
         }
